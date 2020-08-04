@@ -27,6 +27,7 @@ main {
     height: 30rem;
     width: 30rem;
     display: flex;
+    background-color: black;
 }
 
 .board {
@@ -35,14 +36,18 @@ main {
     grid-template-rows: repeat(3, 1fr);
     height: 100%;
     width: 100%;
-    grid-gap: 1px;
+    grid-gap: 6px;
+    /* border: 10px solid black; */
+    box-sizing: border-box;
+
 }
 
 .board__square {
-    border: solid 1px black;
-    box-sizing: content-box;
-    height: 100%;
-    width: 100%;
+    background-color: white;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 
