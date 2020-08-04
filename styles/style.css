@@ -18,9 +18,15 @@ h1 {
     font-weight: bold;
 }
 
+main {
+    display: flex;
+    justify-content: center;
+}
+
 .board-container {
     height: 30rem;
     width: 30rem;
+    display: flex;
 }
 
 .board {
