@@ -17,8 +17,11 @@ const game = (function() {
 })();
 
 
-// Logic below for rendering game board should be able to go inside gameBoard module potentially?
+// Logic below for rendering game board should be able to go inside gameBoard module potentially? Or a displayController module?
 const boardSquares = document.querySelectorAll(".board__square");
+const updateBtn = document.querySelector(".button--update");
+
+updateBtn.addEventListener('click', () => render(gameBoard.board, boardSquares));
 
 
 const render = function(array, targetDivs) {
