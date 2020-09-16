@@ -7,6 +7,7 @@ const gameBoard = (function() {
 })();
 
 const player = function(name, symbol) {
-    
-    return { name, symbol };
-}
+    const _playerNameCapitalise = (name) => name.toUpperCase();
+    const playerNameDisplay = () => console.log(_playerNameCapitalise(name));
+    return { name, symbol, playerNameDisplay };
+}   
