@@ -20,7 +20,9 @@ h1 {
 
 main {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: center;
 }
 
 .board-container {
@@ -28,6 +30,7 @@ main {
     width: 30rem;
     display: flex;
     background-color: black;
+    margin-top: 1rem;
 }
 
 .board {
@@ -50,5 +53,11 @@ main {
     justify-content: center;
 }
 
-
+.button--update {
+    margin-top: 2rem;
+    padding: 0.5rem;
+    background-color: lightblue;
+    border: 1px solid black;
+    border-radius: 4px;
+}
 
