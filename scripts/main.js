@@ -12,6 +12,12 @@ const player = function(name, symbol) {
     return { name, symbol, playerNameDisplay };
 }   
 
+const game = (function() {
+    return {};
+})();
+
+
+// Logic below for rendering game board should be able to go inside gameBoard module potentially?
 const boardSquares = document.querySelectorAll(".board__square");
 
 
