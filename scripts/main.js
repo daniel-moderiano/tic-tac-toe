@@ -1,7 +1,7 @@
 const gameBoard = (function() {
-    const board = ["X", "X", "O",
-                   "X", "O", "O",            
-                   "O", "X", "X"];
+    const board = ["", "", "",
+                   "", "", "",            
+                   "", "", ""];
     
   
 
@@ -26,6 +26,31 @@ const game = (function() {
 })();
 
 
+
+if ((gameBoard.board[0] === gameBoard.board[1] && gameBoard.board[0] === gameBoard.board[2] && 
+    gameBoard.board[0] != "") || 
+    (gameBoard.board[3] === gameBoard.board[4] && gameBoard.board[3] === gameBoard.board[5] && 
+    gameBoard.board[3] != "") || 
+    (gameBoard.board[6] === gameBoard.board[7] && gameBoard.board[6] === gameBoard.board[8] && 
+    gameBoard.board[6] != "") || 
+
+    (gameBoard.board[0] === gameBoard.board[3] && gameBoard.board[0] === gameBoard.board[6] && 
+    gameBoard.board[0] != "") || 
+    (gameBoard.board[1] === gameBoard.board[4] && gameBoard.board[1] === gameBoard.board[7] && 
+    gameBoard.board[6] != "") || 
+    (gameBoard.board[2] === gameBoard.board[5] && gameBoard.board[2] === gameBoard.board[8] && 
+    gameBoard.board[2] != "") ||
+
+    (gameBoard.board[0] === gameBoard.board[4] && gameBoard.board[0] === gameBoard.board[8] && 
+    gameBoard.board[0] != "") || 
+    (gameBoard.board[2] === gameBoard.board[4] && gameBoard.board[2] === gameBoard.board[6] && 
+    gameBoard.board[2] != "")) {
+        alert ("You win!");
+    };
+
+
+
+
 // Logic below for rendering game board should be able to go inside gameBoard module potentially? Or a displayController module?
 const boardSquares = document.querySelectorAll(".board__square");
 const updateBtn = document.querySelector(".button--update");
@@ -33,8 +58,10 @@ const updateBtn = document.querySelector(".button--update");
 
 boardSquares.forEach(function(square) {
     square.addEventListener('click', function(e) {
-  
         console.log(e.target.getAttribute("data-id"));
+        gameBoard.board[e.target.getAttribute("data-id")] = "X";
+        render(gameBoard.board, boardSquares);
+
     });
 });
 
