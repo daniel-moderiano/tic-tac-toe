@@ -21,10 +21,22 @@ const gameBoard = (function() {
             (board[0] === board[4] && board[0] === board[8] && board[0] != "") || 
             (board[2] === board[4] && board[2] === board[6] && board[2] != "")) {
                 return true;
+        } else {
+            return false;
         }
     }
+
+    const checkTie = function() {
+        if (board.includes("")) {
+            return false;
+        } else if (!checkWin()){
+            return true;
+        }
+    }
+
     
-    return { board, clearBoard, checkWin };           
+    
+    return { board, clearBoard, checkWin, checkTie };           
 })();
 
 const player = function(name, symbol) {
