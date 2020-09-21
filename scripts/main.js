@@ -7,7 +7,7 @@ const gameBoard = (function() {
         for (let i = 0; i < board.length; i++) {
             board[i] = "";
         }
-    }
+    };
 
     const checkWin = function() {
         if ((board[0] === board[1] && board[0] === board[2] && board[0] != "") || 
@@ -24,7 +24,6 @@ const gameBoard = (function() {
         }
     }
     
-
     return { board, clearBoard, checkWin };           
 })();
 
@@ -32,41 +31,26 @@ const player = function(name, symbol) {
     const _playerNameCapitalise = (name) => name.toUpperCase();
     const playerNameDisplay = () => console.log(_playerNameCapitalise(name));
     return { name, symbol, playerNameDisplay };
-}   
+};
 
 const game = (function() {
     return {};
 })();
 
 
-const checkWin = function() {
-    if ((gameBoard.board[0] === gameBoard.board[1] && gameBoard.board[0] === gameBoard.board[2] && 
-        gameBoard.board[0] != "") || 
-        (gameBoard.board[3] === gameBoard.board[4] && gameBoard.board[3] === gameBoard.board[5] && 
-        gameBoard.board[3] != "") || 
-        (gameBoard.board[6] === gameBoard.board[7] && gameBoard.board[6] === gameBoard.board[8] && 
-        gameBoard.board[6] != "") || 
-    
-        (gameBoard.board[0] === gameBoard.board[3] && gameBoard.board[0] === gameBoard.board[6] && 
-        gameBoard.board[0] != "") || 
-        (gameBoard.board[1] === gameBoard.board[4] && gameBoard.board[1] === gameBoard.board[7] && 
-        gameBoard.board[7] != "") || 
-        (gameBoard.board[2] === gameBoard.board[5] && gameBoard.board[2] === gameBoard.board[8] && 
-        gameBoard.board[2] != "") ||
-    
-        (gameBoard.board[0] === gameBoard.board[4] && gameBoard.board[0] === gameBoard.board[8] && 
-        gameBoard.board[0] != "") || 
-        (gameBoard.board[2] === gameBoard.board[4] && gameBoard.board[2] === gameBoard.board[6] && 
-        gameBoard.board[2] != "")) {
-            return true;
-    }
-}
+const turnTracker = () => {
+    let turn = 0;
+    return () => {
+        console.log(turn);
+        if (turn === 0) {
+            turn = 1;
+        } else {
+            turn = 0;
+        }
+    };
+};
 
-
-
-
-
-
+let currentTurn = turnTracker();
 
 // Logic below for rendering game board should be able to go inside gameBoard module potentially? Or a displayController module?
 const boardSquares = document.querySelectorAll(".board__square");
@@ -96,4 +80,4 @@ const render = function(array, targetDivs) {
         targetDivs[i].textContent = array[i];
     }
     return ("done");
-}
+};
