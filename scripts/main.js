@@ -48,11 +48,23 @@ const gameBoard = (function() {
     return { board, boardSquares, render, clearBoard, checkWin, checkTie };           
 })();
 
-const player = function(name, symbol) {
+const Player = function(name, marker) {
     const _playerNameCapitalise = (name) => name.toUpperCase();
     const playerNameDisplay = () => console.log(_playerNameCapitalise(name));
-    return { name, symbol, playerNameDisplay };
+
+    const placeMarker = (event) => {
+        let squareSelected = event.target.getAttribute("data-id");
+        gameBoard.board[squareSelected] = marker;
+    };
+
+    return { name, marker, playerNameDisplay, placeMarker };
 };
+
+const player1 = Player('Dan', "X");
+
+const player2 = Player('Sam', "O");
+
+
 
 const game = (function() {
     return {};
@@ -80,10 +92,15 @@ let currentTurn = turnTracker();
 const updateBtn = document.querySelector(".button--update");
 const clearBtn = document.querySelector(".button--clear");
 
+const placeMarker = (event) => {
+    let squareSelected = event.target.getAttribute("data-id");
+    gameBoard.board[squareSelected] = "X";
+};
+
 
 gameBoard.boardSquares.forEach(function(square) {
-    square.addEventListener('click', function(e) {
-        gameBoard.board[e.target.getAttribute("data-id")] = "X";
+    square.addEventListener('click', player2.placeMarker);
+    square.addEventListener('click', function() {
         gameBoard.render();
         if (gameBoard.checkWin()) {
        
@@ -93,10 +110,12 @@ gameBoard.boardSquares.forEach(function(square) {
         }
         
     });
+    
 });
 
+const targetDisplay = (event) => console.log(event.target);
 
-updateBtn.addEventListener('click', () => gameBoard.render());
+updateBtn.addEventListener('click', targetDisplay);
 
 clearBtn.addEventListener('click', () => {
     gameBoard.clearBoard();
