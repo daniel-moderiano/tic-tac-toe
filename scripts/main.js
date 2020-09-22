@@ -34,8 +34,6 @@ const gameBoard = (function() {
         }
     }
 
-    
-    
     return { board, clearBoard, checkWin, checkTie };           
 })();
 
@@ -67,6 +65,7 @@ let currentTurn = turnTracker();
 // Logic below for rendering game board should be able to go inside gameBoard module potentially? Or a displayController module?
 const boardSquares = document.querySelectorAll(".board__square");
 const updateBtn = document.querySelector(".button--update");
+const clearBtn = document.querySelector(".button--clear");
 
 
 boardSquares.forEach(function(square) {
@@ -85,6 +84,11 @@ boardSquares.forEach(function(square) {
 
 
 updateBtn.addEventListener('click', () => render(gameBoard.board, boardSquares));
+
+clearBtn.addEventListener('click', () => {
+    gameBoard.clearBoard();
+    render(gameBoard.board, boardSquares);
+});
 
 
 const render = function(array, targetDivs) {
