@@ -50,19 +50,21 @@ const gameBoard = (function() {
 const Player = function(name, marker) {
     const _playerNameCapitalise = (name) => name.toUpperCase();
     const playerNameDisplay = () => console.log(_playerNameCapitalise(name));
+    // const getName = () => name;
+    // const getMarker = () => marker;
+    // const placeMarker = (event) => {
+    //     let squareSelected = event.target.getAttribute("data-id");
+    //     gameBoard.board[squareSelected] = marker;
+    // };
 
-    const placeMarker = (event) => {
-        let squareSelected = event.target.getAttribute("data-id");
-        gameBoard.board[squareSelected] = marker;
-    };
-
-    return { name, marker, playerNameDisplay, placeMarker };
+    return { playerNameDisplay, name, marker };
 };
 
-const player1 = Player('Dan', "X");
+const player1 = Player('Dan', "O");
 
-const player2 = Player('Sam', "O");
+const player2 = Player('Sam', "X");
 
+players = [player1, player2];
 
 // The currentTurn method should be called and not the turn property. Currently the turn property has been left public in case it needs to be reassigned to zero for a game reset, however this will end up being a separate method and so will switch to private later
 const game = (function() {
@@ -109,14 +111,21 @@ const game = (function() {
 const updateBtn = document.querySelector(".button--update");
 const clearBtn = document.querySelector(".button--clear");
 
-const placeMarker = (event) => {
-    let squareSelected = event.target.getAttribute("data-id");
-    gameBoard.board[squareSelected] = "X";
-};
 
 // Create this function in the game module as a 'playTurn' type function
 gameBoard.boardSquares.forEach(function(square) {
-    square.addEventListener('click', game.currentPlayer().placeMarker);
+    square.addEventListener('click', function() {
+        console.log(game.currentPlayer().marker);
+        console.log(game.currentTurn());
+    });
+    
+    square.addEventListener('click', (event) => {
+        let squareSelected = event.target.getAttribute("data-id");
+        gameBoard.board[squareSelected] = game.currentPlayer().marker;
+    });
+
+
+
     square.addEventListener('click', function() {
         game.playTurn();
         gameBoard.render();
