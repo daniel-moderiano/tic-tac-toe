@@ -67,23 +67,28 @@ const player2 = Player('Sam', "O");
 
 
 const game = (function() {
-    return {};
+    let turn = 0;
+    const players = [player1, player2];
+    const turnTracker = () => {
+        
+    };
+
+    const playTurn = () => {
+        let currentPlayer = players[turn];
+        console.log(currentPlayer, turn);
+
+        turn++;
+        if(turn === players.length) {
+            turn = 0;
+        }
+        return "Turn complete";
+    };
+
+    return { turnTracker, playTurn, players };
 })();
 
 
-const turnTracker = () => {
-    let turn = 0;
-    return () => {
-        console.log(turn);
-        if (turn === 0) {
-            turn = 1;
-        } else {
-            turn = 0;
-        }
-    };
-};
 
-let currentTurn = turnTracker();
 
 // Logic below for rendering game board should be able to go inside gameBoard module potentially? Or a displayController module?
 
@@ -97,7 +102,7 @@ const placeMarker = (event) => {
     gameBoard.board[squareSelected] = "X";
 };
 
-
+// Create this function in the game module as a 'playTurn' type function
 gameBoard.boardSquares.forEach(function(square) {
     square.addEventListener('click', player2.placeMarker);
     square.addEventListener('click', function() {
