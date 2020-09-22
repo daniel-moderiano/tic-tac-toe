@@ -10,7 +10,6 @@ const gameBoard = (function() {
         for (let i = 0; i < board.length; i++) {
             boardSquares[i].textContent = board[i];
         }
-        return ("done");
     };
 
    
@@ -68,23 +67,28 @@ const player2 = Player('Sam', "O");
 
 const game = (function() {
     let turn = 0;
+    // For single player, the comp should be assigned as player2
     const players = [player1, player2];
-    const turnTracker = () => {
-        
+    
+    const changeTurn = () => {
+        turn++;
+        if (turn === players.length) {
+            turn = 0;
+        }
     };
-
+    const currentTurn = function() {
+        return(turn);
+    };
+  
     const playTurn = () => {
         let currentPlayer = players[turn];
         console.log(currentPlayer, turn);
-
-        turn++;
-        if(turn === players.length) {
-            turn = 0;
-        }
+        changeTurn();
+        
         return "Turn complete";
     };
 
-    return { turnTracker, playTurn, players };
+    return { playTurn, players, changeTurn, currentTurn, turn };
 })();
 
 
