@@ -64,7 +64,7 @@ const player1 = Player('Dan', "X");
 const player2 = Player('Sam', "O");
 
 
-
+// The currentTurn method should be called and not the turn property. Currently the turn property has been left public in case it needs to be reassigned to zero for a game reset, however this will end up being a separate method and so will switch to private later
 const game = (function() {
     let turn = 0;
     // For single player, the comp should be assigned as player2
@@ -76,19 +76,23 @@ const game = (function() {
             turn = 0;
         }
     };
+
     const currentTurn = function() {
         return(turn);
     };
+
+    const currentPlayer = function() {
+        return players[turn];
+    }
   
     const playTurn = () => {
-        let currentPlayer = players[turn];
-        console.log(currentPlayer, turn);
+        console.log(`${currentPlayer().name} places ${currentPlayer().marker}`);
         changeTurn();
         
         return "Turn complete";
     };
 
-    return { playTurn, players, changeTurn, currentTurn, turn };
+    return { playTurn, players, changeTurn, currentTurn, turn, currentPlayer };
 })();
 
 
@@ -108,9 +112,12 @@ const placeMarker = (event) => {
 
 // Create this function in the game module as a 'playTurn' type function
 gameBoard.boardSquares.forEach(function(square) {
-    square.addEventListener('click', player2.placeMarker);
+    square.addEventListener('click', game.currentPlayer().placeMarker);
     square.addEventListener('click', function() {
+        game.playTurn();
         gameBoard.render();
+    });
+    square.addEventListener('click', function() {
         if (gameBoard.checkWin()) {
        
             console.log("You win!");
