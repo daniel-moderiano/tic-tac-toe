@@ -2,7 +2,18 @@ const gameBoard = (function() {
     const board = ["", "", "",
                    "", "", "",            
                    "", "", ""];
-    
+
+    const boardSquares = document.querySelectorAll(".board__square");
+
+        
+    const render = function() {
+        for (let i = 0; i < board.length; i++) {
+            boardSquares[i].textContent = board[i];
+        }
+        return ("done");
+    };
+
+   
     const clearBoard = function() {
         for (let i = 0; i < board.length; i++) {
             board[i] = "";
@@ -34,7 +45,7 @@ const gameBoard = (function() {
         }
     }
 
-    return { board, clearBoard, checkWin, checkTie };           
+    return { board, boardSquares, render, clearBoard, checkWin, checkTie };           
 })();
 
 const player = function(name, symbol) {
@@ -63,15 +74,17 @@ const turnTracker = () => {
 let currentTurn = turnTracker();
 
 // Logic below for rendering game board should be able to go inside gameBoard module potentially? Or a displayController module?
-const boardSquares = document.querySelectorAll(".board__square");
+
+// Displaycontroller module is probably better suited to contain the buttons to update/clear board.
+// const boardSquares = document.querySelectorAll(".board__square");
 const updateBtn = document.querySelector(".button--update");
 const clearBtn = document.querySelector(".button--clear");
 
 
-boardSquares.forEach(function(square) {
+gameBoard.boardSquares.forEach(function(square) {
     square.addEventListener('click', function(e) {
         gameBoard.board[e.target.getAttribute("data-id")] = "X";
-        render(gameBoard.board, boardSquares);
+        gameBoard.render();
         if (gameBoard.checkWin()) {
        
             console.log("You win!");
@@ -83,17 +96,10 @@ boardSquares.forEach(function(square) {
 });
 
 
-updateBtn.addEventListener('click', () => render(gameBoard.board, boardSquares));
+updateBtn.addEventListener('click', () => gameBoard.render());
 
 clearBtn.addEventListener('click', () => {
     gameBoard.clearBoard();
-    render(gameBoard.board, boardSquares);
+    gameBoard.render();
 });
 
-
-const render = function(array, targetDivs) {
-    for (let i = 0; i < array.length; i++) {
-        targetDivs[i].textContent = array[i];
-    }
-    return ("done");
-};
