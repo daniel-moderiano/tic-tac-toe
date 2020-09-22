@@ -84,6 +84,10 @@ const game = (function() {
     const currentPlayer = function() {
         return players[turn];
     }
+
+    const resetGame = function() {
+        turn = 0;
+    }
   
     const playTurn = () => {
         console.log(`${currentPlayer().name} places ${currentPlayer().marker}`);
@@ -92,7 +96,7 @@ const game = (function() {
         return "Turn complete";
     };
 
-    return { playTurn, players, changeTurn, currentTurn, turn, currentPlayer };
+    return { playTurn, players, changeTurn, currentTurn, turn, currentPlayer, resetGame };
 })();
 
 
@@ -136,5 +140,6 @@ updateBtn.addEventListener('click', targetDisplay);
 clearBtn.addEventListener('click', () => {
     gameBoard.clearBoard();
     gameBoard.render();
+    game.resetGame();
 });
 
