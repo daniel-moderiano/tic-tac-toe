@@ -103,15 +103,18 @@ const game = (function() {
 
     // Consider abstraction to playTurn function below; not a great deal of functions and adds perhaps needless step.
   
-    // const playTurn = (e) => {
-    //     console.log(`${currentPlayer().name} places ${currentPlayer().marker}`);
-    //     currentPlayer().placeMarker(e);
-    //     changeTurn();
-        
-    //     return "Turn complete";
-    // };
+    const playTurn = function(e) {
+        if (gameBoard.checkOccupied(e) === false) {
+            currentPlayer().placeMarker(e);
+            changeTurn();
+            gameBoard.render();
+        } else {
+            // pass
+        }
+        return "Turn complete";
+    };
 
-    return { players, changeTurn, currentTurn, turn, currentPlayer, resetGame };
+    return { players, changeTurn, currentTurn, turn, currentPlayer, resetGame, playTurn };
 })();
 
 
@@ -121,20 +124,36 @@ const game = (function() {
 
 // Displaycontroller module is probably better suited to contain the buttons to update/clear board.
 // const boardSquares = document.querySelectorAll(".board__square");
-const updateBtn = document.querySelector(".button--update");
-const clearBtn = document.querySelector(".button--clear");
+
+const displayController = (function() {
+
+    const clearBtn = document.querySelector(".button--clear");
+
+
+
+    clearBtn.addEventListener('click', () => {
+        gameBoard.clearBoard();
+        gameBoard.render();
+        game.resetGame();
+});
+
+
+})();
+
 
 
 // Create this function in the game module as a 'playTurn' type function
 gameBoard.boardSquares.forEach(function(square) {
     square.addEventListener('click', function(e) {
-        if (gameBoard.checkOccupied(e) === false) {
-            game.currentPlayer().placeMarker(e);
-            game.changeTurn();
-            gameBoard.render();
-        } else {
-            // pass
-        }
+        // if (gameBoard.checkOccupied(e) === false) {
+        //     game.currentPlayer().placeMarker(e);
+        //     game.changeTurn();
+        //     gameBoard.render();
+        // } else {
+        //     // pass
+        // }
+        game.playTurn(e);
+        gameBoard.render();
     });
     
 
@@ -155,13 +174,4 @@ gameBoard.boardSquares.forEach(function(square) {
     
 });
 
-const targetDisplay = (event) => console.log(event.target);
-
-updateBtn.addEventListener('click', targetDisplay);
-
-clearBtn.addEventListener('click', () => {
-    gameBoard.clearBoard();
-    gameBoard.render();
-    game.resetGame();
-});
 
