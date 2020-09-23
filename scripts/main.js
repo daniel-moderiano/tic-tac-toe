@@ -52,12 +52,12 @@ const Player = function(name, marker) {
     const playerNameDisplay = () => console.log(_playerNameCapitalise(name));
     // const getName = () => name;
     // const getMarker = () => marker;
-    // const placeMarker = (event) => {
-    //     let squareSelected = event.target.getAttribute("data-id");
-    //     gameBoard.board[squareSelected] = marker;
-    // };
+    const placeMarker = (event) => {
+        let squareSelected = event.target.getAttribute("data-id");
+        gameBoard.board[squareSelected] = marker;
+    };
 
-    return { playerNameDisplay, name, marker };
+    return { playerNameDisplay, name, marker, placeMarker };
 };
 
 const player1 = Player('Dan', "O");
@@ -90,15 +90,18 @@ const game = (function() {
     const resetGame = function() {
         turn = 0;
     }
-  
-    const playTurn = () => {
-        console.log(`${currentPlayer().name} places ${currentPlayer().marker}`);
-        changeTurn();
-        
-        return "Turn complete";
-    };
 
-    return { playTurn, players, changeTurn, currentTurn, turn, currentPlayer, resetGame };
+    // Consider abstraction to playTurn function below; not a great deal of functions and adds perhaps needless step.
+  
+    // const playTurn = (e) => {
+    //     console.log(`${currentPlayer().name} places ${currentPlayer().marker}`);
+    //     currentPlayer().placeMarker(e);
+    //     changeTurn();
+        
+    //     return "Turn complete";
+    // };
+
+    return { players, changeTurn, currentTurn, turn, currentPlayer, resetGame };
 })();
 
 
@@ -114,21 +117,17 @@ const clearBtn = document.querySelector(".button--clear");
 
 // Create this function in the game module as a 'playTurn' type function
 gameBoard.boardSquares.forEach(function(square) {
-    square.addEventListener('click', function() {
+    square.addEventListener('click', function(e) {
         console.log(game.currentPlayer().marker);
-        console.log(game.currentTurn());
+        game.currentPlayer().placeMarker(e);
+        game.changeTurn();
+        gameBoard.render();
     });
     
-    square.addEventListener('click', (event) => {
-        let squareSelected = event.target.getAttribute("data-id");
-        gameBoard.board[squareSelected] = game.currentPlayer().marker;
-    });
 
+    square.addEventListener('click', function(e) {
 
-
-    square.addEventListener('click', function() {
-        game.playTurn();
-        gameBoard.render();
+        
     });
     square.addEventListener('click', function() {
         if (gameBoard.checkWin()) {
