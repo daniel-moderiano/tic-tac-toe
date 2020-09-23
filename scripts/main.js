@@ -19,6 +19,16 @@ const gameBoard = (function() {
         }
     };
 
+    const checkOccupied = function(event) {
+        let squareSelected = event.target.getAttribute("data-id");
+        if (board[squareSelected] === "") {
+            return false;
+        } else {
+            return true;
+        }
+    };
+
+
     const checkWin = function() {
         if ((board[0] === board[1] && board[0] === board[2] && board[0] != "") || 
             (board[3] === board[4] && board[3] === board[5] && board[3] != "") || 
@@ -44,7 +54,7 @@ const gameBoard = (function() {
         }
     }
 
-    return { board, boardSquares, render, clearBoard, checkWin, checkTie };           
+    return { board, boardSquares, render, clearBoard, checkWin, checkTie, checkOccupied };           
 })();
 
 const Player = function(name, marker) {
@@ -118,10 +128,13 @@ const clearBtn = document.querySelector(".button--clear");
 // Create this function in the game module as a 'playTurn' type function
 gameBoard.boardSquares.forEach(function(square) {
     square.addEventListener('click', function(e) {
-        console.log(game.currentPlayer().marker);
-        game.currentPlayer().placeMarker(e);
-        game.changeTurn();
-        gameBoard.render();
+        if (gameBoard.checkOccupied(e) === false) {
+            game.currentPlayer().placeMarker(e);
+            game.changeTurn();
+            gameBoard.render();
+        } else {
+            // pass
+        }
     });
     
 
@@ -134,7 +147,8 @@ gameBoard.boardSquares.forEach(function(square) {
        
             console.log("You win!");
             gameBoard.clearBoard();
-            // render(gameBoard.board, boardSquares);
+            // alert("You win");
+            // gameBoard.render();
         }
         
     });
