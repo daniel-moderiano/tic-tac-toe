@@ -119,25 +119,15 @@ const game = (function() {
 
 
 
-
-// Logic below for rendering game board should be able to go inside gameBoard module potentially? Or a displayController module?
-
-// Displaycontroller module is probably better suited to contain the buttons to update/clear board.
-// const boardSquares = document.querySelectorAll(".board__square");
-
 const displayController = (function() {
 
     const clearBtn = document.querySelector(".button--clear");
-
-
 
     clearBtn.addEventListener('click', () => {
         gameBoard.clearBoard();
         gameBoard.render();
         game.resetGame();
-});
-
-
+    });
 })();
 
 
@@ -157,21 +147,19 @@ gameBoard.boardSquares.forEach(function(square) {
     });
     
 
-    square.addEventListener('click', function(e) {
-
-        
-    });
     square.addEventListener('click', function() {
         if (gameBoard.checkWin()) {
-       
             console.log("You win!");
             gameBoard.clearBoard();
             // alert("You win");
             // gameBoard.render();
+        } else if (gameBoard.checkTie()) {
+            console.log("It's a tie!");
+            gameBoard.clearBoard();
+        } else {
+            // pass
         }
-        
     });
-    
 });
 
 
