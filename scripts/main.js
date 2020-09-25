@@ -5,14 +5,12 @@ const gameBoard = (function() {
 
     const boardSquares = document.querySelectorAll(".board__square");
 
-        
     const render = function() {
         for (let i = 0; i < board.length; i++) {
             boardSquares[i].textContent = board[i];
         }
     };
 
-   
     const clearBoard = function() {
         for (let i = 0; i < board.length; i++) {
             board[i] = "";
@@ -27,7 +25,6 @@ const gameBoard = (function() {
             return true;
         }
     };
-
 
     const checkWin = function() {
         if ((board[0] === board[1] && board[0] === board[2] && board[0] != "") || 
@@ -50,44 +47,46 @@ const gameBoard = (function() {
         switch(true) {
             case (board[0] === board[1] && board[0] === board[2] && board[0] != ""):
                 console.log("Case 1");
-                break;
-          
-             
+                return [0, 1, 2];
+                // break;
     
             case (board[3] === board[4] && board[3] === board[5] && board[3] != ""):
                 console.log("Case 2");
-                break;
+                return [3, 4, 5];
+                // break;
     
             case (board[6] === board[7] && board[6] === board[8] && board[6] != ""):
                 console.log("Case 3");
-                break;
+                return [6, 7, 8];
+                // break;
            
             case (board[0] === board[3] && board[0] === board[6] && board[0] != ""):
                 console.log("Case 4");
-                break;
+                return [0, 3, 6];
+                // break;
     
             case (board[1] === board[4] && board[1] === board[7] && board[7] != ""):
                 console.log("Case 5");
-                break;
+                return [1, 4, 7];
+                // break;
     
             case (board[2] === board[5] && board[2] === board[8] && board[2] != ""):
                 console.log("Case 6");
-                break;
+                return [2, 5, 8];
+                // break;
     
             case (board[0] === board[4] && board[0] === board[8] && board[0] != ""):
                 console.log("Case 7");
-                break;
+                return [0, 4, 8];
+                // break;
     
             case (board[2] === board[4] && board[2] === board[6] && board[2] != ""):
                 console.log("Case 8");
-                break;
+                return [2, 4, 6];
+                // break;
         };
     };
     
-    
-
-    
-
     const checkTie = function() {
         if (board.includes("")) {
             return false;
@@ -96,7 +95,16 @@ const gameBoard = (function() {
         }
     }
 
-    return { board, boardSquares, render, clearBoard, checkWin, checkTie, checkOccupied, findWinner };           
+    return { 
+        board, 
+        boardSquares, 
+        render, 
+        clearBoard, 
+        checkWin, 
+        checkTie, 
+        checkOccupied, 
+        findWinner 
+    };           
 })();
 
 const Player = function(name, marker) {
@@ -113,10 +121,8 @@ const Player = function(name, marker) {
 };
 
 const player1 = Player('Dan', "O");
-
 const player2 = Player('Sam', "X");
 
-players = [player1, player2];
 
 // The currentTurn method should be called and not the turn property. Currently the turn property has been left public in case it needs to be reassigned to zero for a game reset, however this will end up being a separate method and so will switch to private later
 const game = (function() {
@@ -181,10 +187,9 @@ gameBoard.boardSquares.forEach(function(square) {
         gameBoard.render();
     });
     
-
     square.addEventListener('click', function() {
         if (gameBoard.checkWin()) {
-            gameBoard.findWinner();
+            console.log(gameBoard.findWinner());
             console.log("You win!");
             gameBoard.clearBoard();
             // alert("You win");
