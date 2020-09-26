@@ -169,6 +169,7 @@ const game = (function() {
     // Consider abstraction to playTurn function below; not a great deal of functions and adds perhaps needless step.
   
     const playTurn = function(e) {
+        gameBoard.clearColours();  
         if (gameBoard.checkOccupied(e) === false) {
             currentPlayer().placeMarker(e);
             changeTurn();
@@ -176,10 +177,17 @@ const game = (function() {
         } else {
             // pass
         }
-        return "Turn complete";
     };
 
-    return { players, changeTurn, currentTurn, turn, currentPlayer, resetGame, playTurn };
+    return { 
+        players, 
+        changeTurn, 
+        currentTurn, 
+        turn, 
+        currentPlayer, 
+        resetGame, 
+        playTurn 
+    };
 })();
 
 
