@@ -54,6 +54,10 @@ main {
     justify-content: center;
 }
 
+.board__square--coloured {
+    background-color: rgb(184, 232, 255);
+}
+
 .button--update, .button--clear {
     margin-top: 2rem;
     padding: 0.5rem;

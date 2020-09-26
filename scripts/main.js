@@ -95,6 +95,13 @@ const gameBoard = (function() {
         }
     }
 
+    const colourWinningSquares = function(winArray) {
+        winArray.forEach(element => {
+            let square = document.querySelector(`[data-id='${element}']`);
+            square.classList.toggle('board__square--coloured');
+        });
+    };
+
     return { 
         board, 
         boardSquares, 
@@ -103,7 +110,8 @@ const gameBoard = (function() {
         checkWin, 
         checkTie, 
         checkOccupied, 
-        findWinner 
+        findWinner,
+        colourWinningSquares 
     };           
 })();
 
@@ -176,6 +184,7 @@ const displayController = (function() {
         gameBoard.render();
         game.resetGame();
     });
+
 })();
 
 
@@ -189,7 +198,7 @@ gameBoard.boardSquares.forEach(function(square) {
     
     square.addEventListener('click', function() {
         if (gameBoard.checkWin()) {
-            console.log(gameBoard.findWinner());
+            gameBoard.colourWinningSquares(gameBoard.findWinner());
             console.log("You win!");
             gameBoard.clearBoard();
             // alert("You win");
@@ -202,5 +211,4 @@ gameBoard.boardSquares.forEach(function(square) {
         }
     });
 });
-
 
