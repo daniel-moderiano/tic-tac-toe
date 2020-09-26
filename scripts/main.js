@@ -179,6 +179,20 @@ const game = (function() {
         }
     };
 
+    const gameWin = function() {
+        gameBoard.colourWinningSquares(gameBoard.findWinner());
+        console.log("You win!");
+        gameBoard.clearBoard();
+        displayController.resultsText.textContent = "You Win!";
+    };
+
+    const gameTie = function() {
+        console.log("It's a tie!");
+        gameBoard.clearBoard();
+        displayController.resultsText.textContent = "You Tie!";
+    };
+    
+
     return { 
         players, 
         changeTurn, 
@@ -186,7 +200,9 @@ const game = (function() {
         turn, 
         currentPlayer, 
         resetGame, 
-        playTurn 
+        playTurn,
+        gameTie,
+        gameWin 
     };
 })();
 
@@ -210,6 +226,7 @@ const displayController = (function() {
 
 
 
+
 // Create this function in the game module as a 'playTurn' type function
 gameBoard.boardSquares.forEach(function(square) {
     square.addEventListener('click', function(e) {
@@ -219,14 +236,9 @@ gameBoard.boardSquares.forEach(function(square) {
     
     square.addEventListener('click', function() {
         if (gameBoard.checkWin()) {
-            gameBoard.colourWinningSquares(gameBoard.findWinner());
-            console.log("You win!");
-            gameBoard.clearBoard();
-            displayController.resultsText.textContent = "You Win!";
+            game.gameWin();
         } else if (gameBoard.checkTie()) {
-            console.log("It's a tie!");
-            gameBoard.clearBoard();
-            displayController.resultsText.textContent = "You Tie!";
+            game.gameTie();
         } else {
             // pass
         }
