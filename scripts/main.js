@@ -17,6 +17,14 @@ const gameBoard = (function() {
         }
     };
 
+    const clearColours = function() {
+        boardSquares.forEach(function(square) {
+            if (square.classList.contains("board__square--coloured")) {
+                square.classList.toggle("board__square--coloured");
+            }
+        });
+    };
+
     const checkOccupied = function(event) {
         let squareSelected = event.target.getAttribute("data-id");
         if (board[squareSelected] === "") {
@@ -111,7 +119,8 @@ const gameBoard = (function() {
         checkTie, 
         checkOccupied, 
         findWinner,
-        colourWinningSquares 
+        colourWinningSquares,
+        clearColours 
     };           
 })();
 
@@ -181,6 +190,7 @@ const displayController = (function() {
 
     clearBtn.addEventListener('click', () => {
         gameBoard.clearBoard();
+        gameBoard.clearColours();
         gameBoard.render();
         game.resetGame();
     });
