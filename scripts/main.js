@@ -15,6 +15,7 @@ const gameBoard = (function() {
         for (let i = 0; i < board.length; i++) {
             board[i] = "";
         }
+        displayController.hideResult();
     };
 
     const clearColours = function() {
@@ -38,7 +39,7 @@ const gameBoard = (function() {
         if ((board[0] === board[1] && board[0] === board[2] && board[0] != "") || 
             (board[3] === board[4] && board[3] === board[5] && board[3] != "") || 
             (board[6] === board[7] && board[6] === board[8] && board[6] != "") || 
-        
+
             (board[0] === board[3] && board[0] === board[6] && board[0] != "") || 
             (board[1] === board[4] && board[1] === board[7] && board[7] != "") || 
             (board[2] === board[5] && board[2] === board[8] && board[2] != "") ||
@@ -109,25 +110,23 @@ const gameBoard = (function() {
 })();
 
 const Player = function(name, marker) {
-    const _playerNameCapitalise = (name) => name.toUpperCase();
-    const playerNameDisplay = () => console.log(_playerNameCapitalise(name));
-    // const getName = () => name;
-    // const getMarker = () => marker;
+
     const placeMarker = (event) => {
         let squareSelected = event.target.getAttribute("data-id");
         gameBoard.board[squareSelected] = marker;
     };
 
-    return { playerNameDisplay, name, marker, placeMarker };
+    return { placeMarker };
+
 };
 
 const player1 = Player('Dan', "O");
 const player2 = Player('Sam', "X");
 
 
-// The currentTurn method should be called and not the turn property. Currently the turn property has been left public in case it needs to be reassigned to zero for a game reset, however this will end up being a separate method and so will switch to private later
 const game = (function() {
     let turn = 0;
+
     // For single player, the comp should be assigned as player2
     const players = [player1, player2];
     
@@ -153,7 +152,12 @@ const game = (function() {
     // Consider abstraction to playTurn function below; not a great deal of functions and adds perhaps needless step.
   
     const playTurn = function(e) {
-        gameBoard.clearColours();  
+
+        gameBoard.clearColours();
+        if (!displayController.resultsText.classList.contains("results__text--invisible")) {
+            displayController.hideResult();
+        }
+        
         if (gameBoard.checkOccupied(e) === false) {
             currentPlayer().placeMarker(e);
             changeTurn();
@@ -168,12 +172,16 @@ const game = (function() {
         console.log("You win!");
         gameBoard.clearBoard();
         displayController.resultsText.textContent = "You Win!";
+        displayController.showResult();
+        
     };
 
     const gameTie = function() {
         console.log("It's a tie!");
         gameBoard.clearBoard();
         displayController.resultsText.textContent = "You Tie!";
+        displayController.showResult();
+      
     };
 
     const gameOutcome = function() {
@@ -202,7 +210,7 @@ const game = (function() {
         resetGame, 
         playTurn,
         gameTie,
-        gameWin 
+        gameWin,
     };
 })();
 
@@ -220,13 +228,10 @@ const displayController = (function() {
         game.resetGame();
     });
 
-    return { resultsText };
+    const showResult = () => resultsText.classList.remove("results__text--invisible");
+    const hideResult = () => resultsText.classList.add("results__text--invisible");    
+
+    return { resultsText, toggleResult, showResult, hideResult };
 
 })();
-
-
-
-
-// Create this function in the game module as a 'playTurn' type function
-
 

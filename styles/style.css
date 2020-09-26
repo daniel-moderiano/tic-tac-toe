@@ -66,3 +66,7 @@ main {
     border-radius: 4px;
 }
 
+.results__text--invisible {
+    display: none;
+}
+
