@@ -195,6 +195,7 @@ const game = (function() {
 const displayController = (function() {
 
     const clearBtn = document.querySelector(".button--clear");
+    const resultsText = document.querySelector(".results__text");
 
     clearBtn.addEventListener('click', () => {
         gameBoard.clearBoard();
@@ -202,6 +203,8 @@ const displayController = (function() {
         gameBoard.render();
         game.resetGame();
     });
+
+    return { resultsText };
 
 })();
 
@@ -219,11 +222,11 @@ gameBoard.boardSquares.forEach(function(square) {
             gameBoard.colourWinningSquares(gameBoard.findWinner());
             console.log("You win!");
             gameBoard.clearBoard();
-            // alert("You win");
-            // gameBoard.render();
+            displayController.resultsText.textContent = "You Win!";
         } else if (gameBoard.checkTie()) {
             console.log("It's a tie!");
             gameBoard.clearBoard();
+            displayController.resultsText.textContent = "You Tie!";
         } else {
             // pass
         }
