@@ -54,44 +54,28 @@ const gameBoard = (function() {
     const findWinner = () => {
         switch(true) {
             case (board[0] === board[1] && board[0] === board[2] && board[0] != ""):
-                console.log("Case 1");
                 return [0, 1, 2];
-                // break;
     
             case (board[3] === board[4] && board[3] === board[5] && board[3] != ""):
-                console.log("Case 2");
                 return [3, 4, 5];
-                // break;
     
             case (board[6] === board[7] && board[6] === board[8] && board[6] != ""):
-                console.log("Case 3");
                 return [6, 7, 8];
-                // break;
            
             case (board[0] === board[3] && board[0] === board[6] && board[0] != ""):
-                console.log("Case 4");
                 return [0, 3, 6];
-                // break;
     
             case (board[1] === board[4] && board[1] === board[7] && board[7] != ""):
-                console.log("Case 5");
                 return [1, 4, 7];
-                // break;
     
             case (board[2] === board[5] && board[2] === board[8] && board[2] != ""):
-                console.log("Case 6");
                 return [2, 5, 8];
-                // break;
     
             case (board[0] === board[4] && board[0] === board[8] && board[0] != ""):
-                console.log("Case 7");
                 return [0, 4, 8];
-                // break;
     
             case (board[2] === board[4] && board[2] === board[6] && board[2] != ""):
-                console.log("Case 8");
                 return [2, 4, 6];
-                // break;
         };
     };
     
@@ -191,7 +175,23 @@ const game = (function() {
         gameBoard.clearBoard();
         displayController.resultsText.textContent = "You Tie!";
     };
+
+    const gameOutcome = function() {
+        if (gameBoard.checkWin()) {
+            gameWin();
+        } else if (gameBoard.checkTie()) {
+            gameTie();
+        } else {
+            // pass
+        }
+    }
     
+    gameBoard.boardSquares.forEach(function(square) {
+        square.addEventListener('click', function(e) {
+            playTurn(e);
+            gameOutcome();
+        });
+    });
 
     return { 
         players, 
@@ -228,20 +228,5 @@ const displayController = (function() {
 
 
 // Create this function in the game module as a 'playTurn' type function
-gameBoard.boardSquares.forEach(function(square) {
-    square.addEventListener('click', function(e) {
-        game.playTurn(e);
-        gameBoard.render();
-    });
-    
-    square.addEventListener('click', function() {
-        if (gameBoard.checkWin()) {
-            game.gameWin();
-        } else if (gameBoard.checkTie()) {
-            game.gameTie();
-        } else {
-            // pass
-        }
-    });
-});
+
 
