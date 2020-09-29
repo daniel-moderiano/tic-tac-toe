@@ -105,7 +105,7 @@ const gameBoard = (function() {
         checkOccupied, 
         findWinner,
         colourWinningSquares,
-        clearColours 
+        clearColours,
     };           
 })();
 
@@ -116,7 +116,7 @@ const Player = function(name, marker) {
         gameBoard.board[squareSelected] = marker;
     };
 
-    return { placeMarker };
+    return { placeMarker, name, marker };
 
 };
 
@@ -149,6 +149,14 @@ const game = (function() {
         turn = 0;
     }
 
+    const findWinningPlayer = function() {
+        if (currentTurn() === 0) {
+            return player2;
+        } else {
+            return player1;
+        }
+    };
+
     // Consider abstraction to playTurn function below; not a great deal of functions and adds perhaps needless step.
   
     const playTurn = function(e) {
@@ -169,17 +177,16 @@ const game = (function() {
 
     const gameWin = function() {
         gameBoard.colourWinningSquares(gameBoard.findWinner());
-        console.log("You win!");
+        let winText = `${findWinningPlayer().name} wins!`
         gameBoard.clearBoard();
-        displayController.resultsText.textContent = "You Win!";
+        displayController.resultsText.textContent = winText;
         displayController.showResult();
         
     };
 
     const gameTie = function() {
-        console.log("It's a tie!");
         gameBoard.clearBoard();
-        displayController.resultsText.textContent = "You Tie!";
+        displayController.resultsText.textContent = "It's a Tie!";
         displayController.showResult();
       
     };
@@ -187,6 +194,8 @@ const game = (function() {
     const gameOutcome = function() {
         if (gameBoard.checkWin()) {
             gameWin();
+            console.log(findWinningPlayer());
+            
         } else if (gameBoard.checkTie()) {
             gameTie();
         } else {
@@ -211,6 +220,7 @@ const game = (function() {
         playTurn,
         gameTie,
         gameWin,
+        findWinningPlayer
     };
 })();
 
@@ -228,10 +238,11 @@ const displayController = (function() {
         game.resetGame();
     });
 
+    // need to upgrade to show which player has won
     const showResult = () => resultsText.classList.remove("results__text--invisible");
     const hideResult = () => resultsText.classList.add("results__text--invisible");    
 
-    return { resultsText, toggleResult, showResult, hideResult };
+    return { resultsText, showResult, hideResult };
 
 })();
 
