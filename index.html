@@ -30,17 +30,16 @@
             <button class="button--clear">Clear board</button>
         </div>
 
-        <form class="players" action="submit">
+        <form class="players">
             <fieldset>
                 <label class="players__label" for="player1">Player 1</label>
-                <input class="players__input" id="player1" type="text">
-                <label class="players__label" for="player2">Player 1</label>
-                <input class="players__input" id="player2" type="text">
+                <input placeholder="Enter player name" class="players__input players__input--p1" id="player1" type="text">
+                <label class="players__label" for="player2">Player 2</label>
+                <input placeholder="Enter player name" class="players__input players__input--p2" id="player2" type="text">
             </fieldset>
-            <button class="players__btn">Submit</button>
+            <button class="players__btn">Start game</button>
         </form>
 
-        
         
         <div class="results-container">
             <div class="results__text results__text--invisible"></div>

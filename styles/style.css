@@ -71,3 +71,7 @@ main {
     display: none;
 }
 
+form {
+    padding: 2rem;
+}
+

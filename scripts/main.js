@@ -120,15 +120,20 @@ const Player = function(name, marker) {
 
 };
 
-const player1 = Player('Dan', "O");
-const player2 = Player('Sam', "X");
+// const player1 = Player('Dan', "O");
+// const player2 = Player('Sam', "X");
 
 
 const game = (function() {
     let turn = 0;
 
     // For single player, the comp should be assigned as player2
-    const players = [player1, player2];
+    let players = [];
+
+    
+    
+
+
     
     const changeTurn = () => {
         turn++;
@@ -193,9 +198,7 @@ const game = (function() {
 
     const gameOutcome = function() {
         if (gameBoard.checkWin()) {
-            gameWin();
-            console.log(findWinningPlayer());
-            
+            gameWin();            
         } else if (gameBoard.checkTie()) {
             gameTie();
         } else {
@@ -231,6 +234,49 @@ const displayController = (function() {
     const clearBtn = document.querySelector(".button--clear");
     const resultsText = document.querySelector(".results__text");
 
+    let players;
+
+    const currentPlayers = () => {
+        return players;
+    }
+
+    const playerInput1 = document.querySelector(".players__input--p1");
+    const playerInput2 = document.querySelector(".players__input--p2");
+    const pullNameInputs = function() {
+        let playerName1;
+        let playerName2;
+        if (playerInput1.value === "") {
+            playerName1 = "Player 1";
+        } else {
+            playerName1 = playerInput1.value;
+        }
+    
+        if (playerInput2.value === "") {
+            playerName2 = "Player 2";
+        } else {
+            playerName2 = playerInput2.value;
+        }
+    
+        return [playerName1, playerName2];
+    }
+    
+    
+    
+    const createPlayers = function(playerNames) {
+        const player1 = Player(playerNames[0], "X");
+        const player2 = Player(playerNames[1], "O");
+        return [player1, player2];
+    }
+    
+    
+    const startBtn = document.querySelector(".players__btn");
+    
+    
+    
+    startBtn.addEventListener("click", () => {
+        players = createPlayers(pullNameInputs())
+    });
+
     clearBtn.addEventListener('click', () => {
         gameBoard.clearBoard();
         gameBoard.clearColours();
@@ -240,9 +286,13 @@ const displayController = (function() {
 
     // need to upgrade to show which player has won
     const showResult = () => resultsText.classList.remove("results__text--invisible");
-    const hideResult = () => resultsText.classList.add("results__text--invisible");    
+    const hideResult = () => resultsText.classList.add("results__text--invisible");   
+    
 
-    return { resultsText, showResult, hideResult };
+    
+
+
+    return { resultsText, showResult, hideResult, players, currentPlayers };
 
 })();
 
