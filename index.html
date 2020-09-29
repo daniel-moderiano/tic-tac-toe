@@ -28,21 +28,29 @@
 
         <div class="button-div">
             <button class="button--clear">Clear board</button>
-            <button class="button--reset">Reset Game</button>
+            <button class="button--menu">Main menu</button>
         </div>
 
         <div class="modal--players">
-            <form class="players">
-                <fieldset>
-                    <label class="players__label" for="player1">Player 1</label>
-                    <input placeholder="Enter player name" class="players__input players__input--p1" id="player1" type="text">
-                    <label class="players__label" for="player2">Player 2</label>
-                    <input placeholder="Enter player name" class="players__input players__input--p2" id="player2" type="text">
-                </fieldset>
-                <button class="players__btn" type="submit">Start game</button>
-            </form>
+            <div class="form-container">
+                <form class="players">
+                    <fieldset>
+                        <label class="players__label" for="player1">Player 1</label>
+                        <input placeholder="Enter player name" class="players__input players__input--p1" id="player1" type="text">
+                        <label class="players__label" for="player2">Player 2</label>
+                        <input placeholder="Enter player name" class="players__input players__input--p2" id="player2" type="text">
+                    </fieldset>
+                    <button class="players__btn" type="submit">Start game</button>
+                </form>
+            </div>
         </div>
         
+        <div class="modal--game">
+            <div class="game">
+                <button class="game__1p" type="submit">Single Player</button>
+                <button class="game__2p" type="submit">2 Players</button>
+            </div>
+        </div>
 
         
         <div class="results-container">

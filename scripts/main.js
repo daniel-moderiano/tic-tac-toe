@@ -117,9 +117,9 @@ const displayController = (function() {
     const playerInput1 = document.querySelector(".players__input--p1");
     const playerInput2 = document.querySelector(".players__input--p2");
     const modalPlayers = document.querySelector(".modal--players");
-    const resetBtn = document.querySelector(".button--reset");
-
-
+    const modalgame = document.querySelector(".modal--game");
+    const singlePlayerBtn = document.querySelector(".game__1p");
+    const menuBtn = document.querySelector(".button--menu");
     const startBtn = document.querySelector(".players__btn");
 
     let players;
@@ -169,9 +169,14 @@ const displayController = (function() {
     const showResult = () => resultsText.classList.remove("results__text--invisible");
     const hideResult = () => resultsText.classList.add("results__text--invisible");   
     
-    resetBtn.addEventListener('click', function() {
+    menuBtn.addEventListener('click', function() {
         modalPlayers.style.display = "block";
+        modalgame.style.display = "block";
         fullClear();
+    })
+
+    singlePlayerBtn.addEventListener('click', function() {
+        modalgame.style.display = "none";
     })
 
     return { resultsText, showResult, hideResult, currentPlayers, startBtn };
