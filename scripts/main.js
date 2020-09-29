@@ -116,6 +116,7 @@ const displayController = (function() {
 
     const playerInput1 = document.querySelector(".players__input--p1");
     const playerInput2 = document.querySelector(".players__input--p2");
+    const modalPlayers = document.querySelector(".modal--players");
 
     const startBtn = document.querySelector(".players__btn");
 
@@ -137,7 +138,7 @@ const displayController = (function() {
         }
     
         return [playerName1, playerName2];
-    }
+    };
     
     const createPlayers = function(playerNames) {
         const player1 = Player(playerNames[0], "X");
@@ -147,17 +148,18 @@ const displayController = (function() {
 
     startBtn.addEventListener("click", () => {
         players = createPlayers(pullNameInputs());
+        modalPlayers.style.display = "none";
     });
         
     const currentPlayers = function() {
         return players;
-    }  
+    }  ;
 
     clearBtn.addEventListener('click', () => {
         gameBoard.clearBoard();
         gameBoard.clearColours();
         gameBoard.render();
-        game.resetGame();
+        game.resetTurn();
     });
 
     const showResult = () => resultsText.classList.remove("results__text--invisible");
@@ -180,10 +182,6 @@ const Player = function(name, marker) {
 
 };
 
-// const player1 = Player('Dan', "O");
-// const player2 = Player('Sam', "X");
-
-
 const game = (function() {
     let turn = 0;
 
@@ -202,7 +200,7 @@ const game = (function() {
         return displayController.currentPlayers()[turn];
     }
 
-    const resetGame = function() {
+    const resetTurn = function() {
         turn = 0;
     }
 
@@ -258,18 +256,15 @@ const game = (function() {
         }
     }
     
-    const addPlayFunctions = () => {
-        gameBoard.boardSquares.forEach(function(square) {
-            square.addEventListener('click', function(e) {
-                playTurn(e);
-                gameOutcome();
-            });
-        });
-    };
 
-    displayController.startBtn.addEventListener('click', () => {
-        addPlayFunctions();
-    })
+    gameBoard.boardSquares.forEach(function(square) {
+        square.addEventListener('click', function(e) {
+            playTurn(e);
+            gameOutcome();
+        });
+    });
+
+
     
 
     return { 
@@ -277,7 +272,7 @@ const game = (function() {
         currentTurn, 
         turn, 
         currentPlayer, 
-        resetGame, 
+        resetTurn, 
         playTurn,
         gameTie,
         gameWin,
