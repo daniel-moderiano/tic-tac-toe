@@ -117,6 +117,8 @@ const displayController = (function() {
     const playerInput1 = document.querySelector(".players__input--p1");
     const playerInput2 = document.querySelector(".players__input--p2");
     const modalPlayers = document.querySelector(".modal--players");
+    const resetBtn = document.querySelector(".button--reset");
+
 
     const startBtn = document.querySelector(".players__btn");
 
@@ -155,16 +157,23 @@ const displayController = (function() {
         return players;
     }  ;
 
-    clearBtn.addEventListener('click', () => {
+    const fullClear = function() {
         gameBoard.clearBoard();
         gameBoard.clearColours();
         gameBoard.render();
         game.resetTurn();
-    });
+    }
+
+    clearBtn.addEventListener('click', fullClear);
 
     const showResult = () => resultsText.classList.remove("results__text--invisible");
     const hideResult = () => resultsText.classList.add("results__text--invisible");   
     
+    resetBtn.addEventListener('click', function() {
+        modalPlayers.style.display = "block";
+        fullClear();
+    })
+
     return { resultsText, showResult, hideResult, currentPlayers, startBtn };
 
 })();
