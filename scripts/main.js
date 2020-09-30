@@ -151,6 +151,7 @@ const displayController = (function() {
     startBtn.addEventListener("click", () => {
         players = createPlayers(pullNameInputs());
         modalPlayers.style.display = "none";
+        modalgame.style.display = "none";
     });
         
     const currentPlayers = function() {
@@ -177,6 +178,7 @@ const displayController = (function() {
 
     singlePlayerBtn.addEventListener('click', function() {
         modalgame.style.display = "none";
+
     })
 
     return { resultsText, showResult, hideResult, currentPlayers, startBtn };
