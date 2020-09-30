@@ -117,7 +117,10 @@ const displayController = (function() {
     const playerInput1 = document.querySelector(".players__input--p1");
     const playerInput2 = document.querySelector(".players__input--p2");
     const modalPlayers = document.querySelector(".modal--players");
-    const modalgame = document.querySelector(".modal--game");
+    const modalGame = document.querySelector(".modal--game");
+    const modalGameEnd = document.querySelector(".modal--game-end");
+    const replayBtn = document.querySelector(".game-end__button--replay");
+    const gameEndMenuBtn = document.querySelector(".game-end__button--menu");
     const singlePlayerBtn = document.querySelector(".game__1p");
     const menuBtn = document.querySelector(".button--menu");
     const startBtn = document.querySelector(".players__btn");
@@ -151,7 +154,6 @@ const displayController = (function() {
     startBtn.addEventListener("click", () => {
         players = createPlayers(pullNameInputs());
         modalPlayers.style.display = "none";
-        modalgame.style.display = "none";
     });
         
     const currentPlayers = function() {
@@ -172,16 +174,23 @@ const displayController = (function() {
     
     menuBtn.addEventListener('click', function() {
         modalPlayers.style.display = "block";
-        modalgame.style.display = "block";
+        modalGame.style.display = "block";
         fullClear();
     })
 
     singlePlayerBtn.addEventListener('click', function() {
-        modalgame.style.display = "none";
-
+        modalGame.style.display = "none";
     })
 
-    return { resultsText, showResult, hideResult, currentPlayers, startBtn };
+    const showElement = function(modal) {
+        modal.style.display = "block";
+    }
+
+    const hideElement = function(modal) {
+        modal.style.display = "none";
+    }
+
+    return { resultsText, showResult, hideResult, currentPlayers, startBtn, showElement, hideElement, clearBtn };
 
 })();
 
