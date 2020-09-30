@@ -124,6 +124,7 @@ const displayController = (function() {
     const singlePlayerBtn = document.querySelector(".game__1p");
     const menuBtn = document.querySelector(".button--menu");
     const startBtn = document.querySelector(".players__btn");
+    const resultsInstructions = document.querySelector(".results__instructions");
 
     let players;
 
@@ -182,15 +183,20 @@ const displayController = (function() {
         modalGame.style.display = "none";
     })
 
-    const showElement = function(modal) {
-        modal.style.display = "block";
+    const showElement = function(element) {
+        element.style.display = "block";
     }
 
-    const hideElement = function(modal) {
-        modal.style.display = "none";
+    const hideElement = function(element) {
+        element.style.display = "none";
     }
 
-    return { resultsText, showResult, hideResult, currentPlayers, startBtn, showElement, hideElement, clearBtn };
+    const displayPlayAgain = function(player) {
+        resultsInstructions.textContent = `Press 'Clear Board' to restart, or ${player} can select a square to restart!`;
+        showElement(resultsInstructions);
+    }
+  
+    return { resultsText, showResult, hideResult, currentPlayers, startBtn, showElement, hideElement, clearBtn, displayPlayAgain, resultsInstructions };
 
 })();
 
@@ -244,6 +250,7 @@ const game = (function() {
         gameBoard.clearColours();
         if (!displayController.resultsText.classList.contains("results__text--invisible")) {
             displayController.hideResult();
+            displayController.hideElement(displayController.resultsInstructions);
         }
         
         if (gameBoard.checkOccupied(e) === false) {
@@ -261,14 +268,14 @@ const game = (function() {
         gameBoard.clearBoard();
         displayController.resultsText.textContent = winText;
         displayController.showResult();
-        
+        displayController.displayPlayAgain(currentPlayer().name);
     };
 
     const gameTie = function() {
         gameBoard.clearBoard();
         displayController.resultsText.textContent = "It's a Tie!";
         displayController.showResult();
-      
+        displayController.displayPlayAgain(currentPlayer().name);
     };
 
     const gameOutcome = function() {
@@ -279,6 +286,7 @@ const game = (function() {
         } else {
             // pass
         }
+        
     }
     
 
