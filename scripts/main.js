@@ -16,6 +16,7 @@ const gameBoard = (function() {
             board[i] = "";
         }
         displayController.hideResult();
+        displayController.hideElement(displayController.resultsInstructions);
     };
 
     const clearColours = function() {
@@ -118,7 +119,8 @@ const displayController = (function() {
     const playerInput2 = document.querySelector(".players__input--p2");
     const modalPlayers = document.querySelector(".modal--players");
     const modalGame = document.querySelector(".modal--game");
-    const singlePlayerBtn = document.querySelector(".game__1p");
+    const singlePlayerBtn = document.querySelector(".game__button--1p");
+    const multiplayerBtn = document.querySelector(".game__button--2p");
     const menuBtn = document.querySelector(".button--menu");
     const startBtn = document.querySelector(".players__btn");
     const resultsInstructions = document.querySelector(".results__instructions");
@@ -176,9 +178,11 @@ const displayController = (function() {
         fullClear();
     })
 
-    singlePlayerBtn.addEventListener('click', function() {
+    multiplayerBtn.addEventListener('click', function() {
         modalGame.style.display = "none";
     })
+
+
 
     const showElement = function(element) {
         element.style.display = "block";
