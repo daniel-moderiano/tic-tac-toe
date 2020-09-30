@@ -125,6 +125,11 @@ const displayController = (function() {
     const startBtn = document.querySelector(".players__btn");
     const resultsInstructions = document.querySelector(".results__instructions");
 
+    const playerDisplay = document.querySelector(".player-display");
+    const playerTurnDisplay = document.querySelector(".player-display__first-turn");
+    const playerOneDisplay = document.querySelector(".player-display__symbols--p1");
+    const playerTwoDisplay = document.querySelector(".player-display__symbols--p2");
+
     let players;
 
     const pullNameInputs = function() {
@@ -154,11 +159,15 @@ const displayController = (function() {
     startBtn.addEventListener("click", () => {
         players = createPlayers(pullNameInputs());
         modalPlayers.style.display = "none";
+        playerTurnDisplay.textContent = `${currentPlayers()[0].name} starts!`;
+        playerOneDisplay.textContent = `${currentPlayers()[0].name} playing ${currentPlayers()[0].marker}`;
+        playerTwoDisplay.textContent = `${currentPlayers()[1].name} playing ${currentPlayers()[1].marker}`;
+
     });
         
     const currentPlayers = function() {
         return players;
-    }  ;
+    };
 
     const fullClear = function() {
         gameBoard.clearBoard();
@@ -197,7 +206,7 @@ const displayController = (function() {
         showElement(resultsInstructions);
     }
   
-    return { resultsText, showResult, hideResult, currentPlayers, startBtn, showElement, hideElement, clearBtn, displayPlayAgain, resultsInstructions };
+    return { resultsText, showResult, hideResult, currentPlayers, startBtn, showElement, hideElement, clearBtn, displayPlayAgain, resultsInstructions, playerTurnDisplay };
 
 })();
 
@@ -247,6 +256,9 @@ const game = (function() {
     // Consider abstraction to playTurn function below; not a great deal of functions and adds perhaps needless step.
   
     const playTurn = function(e) {
+        if (displayController.playerTurnDisplay.textContent != "") {
+            displayController.playerTurnDisplay.textContent = "";
+        }
 
         gameBoard.clearColours();
         if (!displayController.resultsText.classList.contains("results__text--invisible")) {
