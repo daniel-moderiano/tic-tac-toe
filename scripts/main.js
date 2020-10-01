@@ -305,8 +305,12 @@ const game = (function() {
     };
 
     const compTurn = function() {
-        gameBoard.board[gameBoard.selectCompSquare()] = currentPlayer().marker
-        gameBoard.render();    
+        if (gameBoard.checkWin()) {
+            // pass
+        } else {
+            gameBoard.board[gameBoard.selectCompSquare()] = currentPlayer().marker
+            gameBoard.render();      
+        }
         changeTurn();
     }
     
@@ -325,10 +329,11 @@ const game = (function() {
             currentPlayer().placeMarker(e);
             changeTurn();
             gameBoard.render();
+            compTurn();
         } else {
             // pass
         }
-        compTurn();
+        
     };
 
     const gameWin = function() {
