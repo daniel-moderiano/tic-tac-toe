@@ -217,7 +217,7 @@ const displayController = (function() {
 
     singlePlayerBtn.addEventListener('click', function() {
         modalGame.style.display = "none";
-        playerInput2.value = "comp";
+        playerInput2.value = "Computer";
         hideElement(playerTwoLabel);
         hideElement(playerInput2);
     })
@@ -378,7 +378,7 @@ const game = (function() {
     }
 
     const gameMode = function() {
-        if (displayController.currentPlayers()[1].name === "comp") {
+        if (displayController.currentPlayers()[1].name === "Computer") {
             onePlayer();
         } else {
             twoPlayer();
