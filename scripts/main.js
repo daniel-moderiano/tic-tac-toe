@@ -326,5 +326,24 @@ const game = (function() {
     };
 })();
 
+// TODO: Create a function that can filter the gameBoard.board array for all empty values and then return the array filled with the indices of those empty values (write the function to return index of element and then use that to filter the array).
 
 
+
+let test = ["", "", "X", "", "O"];
+
+
+let indexFilter = function(array) {
+    let emptyIndicies = [];
+    for (let i = 0; i < array.length; i++) {
+        if (array[i] === "") {
+            emptyIndicies.push(i);
+        }
+    }
+    return emptyIndicies;
+}
+
+
+const randomSquare = function(array) {
+    return Math.round(Math.random() * (array.length - 1));
+}
