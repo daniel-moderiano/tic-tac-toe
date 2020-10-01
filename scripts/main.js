@@ -162,7 +162,7 @@ const displayController = (function() {
         playerTurnDisplay.textContent = `${currentPlayers()[0].name} starts!`;
         playerOneDisplay.textContent = `${currentPlayers()[0].name} playing ${currentPlayers()[0].marker}`;
         playerTwoDisplay.textContent = `${currentPlayers()[1].name} playing ${currentPlayers()[1].marker}`;
-
+        game.gameMode();
     });
         
     const currentPlayers = function() {
@@ -255,7 +255,27 @@ const game = (function() {
 
     // Consider abstraction to playTurn function below; not a great deal of functions and adds perhaps needless step.
   
-    const playTurn = function(e) {
+    const playTurnTwoPlayer = function(e) {
+        if (displayController.playerTurnDisplay.textContent != "") {
+            displayController.playerTurnDisplay.textContent = "";
+        }
+
+        gameBoard.clearColours();
+        if (!displayController.resultsText.classList.contains("results__text--invisible")) {
+            displayController.hideResult();
+            displayController.hideElement(displayController.resultsInstructions);
+        }
+        
+        if (gameBoard.checkOccupied(e) === false) {
+            currentPlayer().placeMarker(e);
+            changeTurn();
+            gameBoard.render();
+        } else {
+            // pass
+        }
+    };
+
+    const playTurnOnePlayer = function(e) {
         if (displayController.playerTurnDisplay.textContent != "") {
             displayController.playerTurnDisplay.textContent = "";
         }
@@ -303,12 +323,33 @@ const game = (function() {
     }
     
 
-    gameBoard.boardSquares.forEach(function(square) {
-        square.addEventListener('click', function(e) {
-            playTurn(e);
-            gameOutcome();
+    const twoPlayer = function() {
+        gameBoard.boardSquares.forEach(function(square) {
+            square.addEventListener('click', function(e) {
+                playTurnTwoPlayer(e);
+                gameOutcome();
+            });
         });
-    });
+    };
+
+    const onePlayer = function() {
+        gameBoard.boardSquares.forEach(function(square) {
+            square.addEventListener('click', function(e) {
+                playTurnOnePlayer(e);
+                gameOutcome();
+            });
+        });
+    }
+
+    const gameMode = function() {
+        if (displayController.currentPlayers()[1].name === "comp") {
+            onePlayer();
+        } else {
+            twoPlayer();
+        }
+    }
+    
+    
 
 
     
@@ -319,10 +360,12 @@ const game = (function() {
         turn, 
         currentPlayer, 
         resetTurn, 
-        playTurn,
+        playTurnTwoPlayer,
+        playTurnOnePlayer,
         gameTie,
         gameWin,
-        findWinningPlayer
+        findWinningPlayer,
+        gameMode
     };
 })();
 
