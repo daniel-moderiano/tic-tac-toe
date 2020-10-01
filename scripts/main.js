@@ -96,6 +96,26 @@ const gameBoard = (function() {
         });
     };
 
+    let indexFilter = function(array) {
+        let emptyIndicies = [];
+        for (let i = 0; i < array.length; i++) {
+            if (array[i] === "") {
+                emptyIndicies.push(i);
+            }
+        }
+        return emptyIndicies;
+    }
+    
+    const randomSquare = function(array) {
+        let index = Math.round(Math.random() * (array.length - 1));
+        return array[index];
+    }
+    
+    
+    const selectCompSquare = function() {
+        return randomSquare(indexFilter(gameBoard.board));
+    }
+
     return { 
         board, 
         boardSquares, 
@@ -107,6 +127,7 @@ const gameBoard = (function() {
         findWinner,
         colourWinningSquares,
         clearColours,
+        selectCompSquare
     };           
 })();
 
@@ -124,6 +145,7 @@ const displayController = (function() {
     const menuBtn = document.querySelector(".button--menu");
     const startBtn = document.querySelector(".players__btn");
     const resultsInstructions = document.querySelector(".results__instructions");
+    const playerTwoLabel = document.querySelector(".players__label--p2");
 
     const playerDisplay = document.querySelector(".player-display");
     const playerTurnDisplay = document.querySelector(".player-display__first-turn");
@@ -184,6 +206,8 @@ const displayController = (function() {
     menuBtn.addEventListener('click', function() {
         modalPlayers.style.display = "block";
         modalGame.style.display = "block";
+        showElement(playerInput2);
+        showElement(playerTwoLabel);
         fullClear();
     })
 
@@ -191,7 +215,12 @@ const displayController = (function() {
         modalGame.style.display = "none";
     })
 
-
+    singlePlayerBtn.addEventListener('click', function() {
+        modalGame.style.display = "none";
+        playerInput2.value = "comp";
+        hideElement(playerTwoLabel);
+        hideElement(playerInput2);
+    })
 
     const showElement = function(element) {
         element.style.display = "block";
@@ -206,7 +235,7 @@ const displayController = (function() {
         showElement(resultsInstructions);
     }
   
-    return { resultsText, showResult, hideResult, currentPlayers, startBtn, showElement, hideElement, clearBtn, displayPlayAgain, resultsInstructions, playerTurnDisplay };
+    return { resultsText, showResult, hideResult, currentPlayers, startBtn, showElement, hideElement, clearBtn, displayPlayAgain, resultsInstructions, playerTurnDisplay, playerInput2, playerInput1 };
 
 })();
 
@@ -275,6 +304,12 @@ const game = (function() {
         }
     };
 
+    const compTurn = function() {
+        gameBoard.board[gameBoard.selectCompSquare()] = currentPlayer().marker
+        gameBoard.render();    
+        changeTurn();
+    }
+    
     const playTurnOnePlayer = function(e) {
         if (displayController.playerTurnDisplay.textContent != "") {
             displayController.playerTurnDisplay.textContent = "";
@@ -293,6 +328,7 @@ const game = (function() {
         } else {
             // pass
         }
+        compTurn();
     };
 
     const gameWin = function() {
@@ -370,33 +406,5 @@ const game = (function() {
 })();
 
 
-let test = ["", "", "X", "", "O"];
-
-
-let indexFilter = function(array) {
-    let emptyIndicies = [];
-    for (let i = 0; i < array.length; i++) {
-        if (array[i] === "") {
-            emptyIndicies.push(i);
-        }
-    }
-    return emptyIndicies;
-}
-
-
-const randomSquare = function(array) {
-    let index = Math.round(Math.random() * (array.length - 1));
-    return array[index];
-}
-
-
-const selectCompSquare = function() {
-    return randomSquare(indexFilter(gameBoard.board));
-}
-
-const compTurn = function() {
-    gameBoard.board[selectCompSquare()] = game.currentPlayer().marker
-    gameBoard.render();    
-}
 
 
