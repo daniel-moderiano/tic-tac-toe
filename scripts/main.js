@@ -80,6 +80,17 @@ const gameBoard = (function() {
                 return [2, 4, 6];
         };
     };
+
+    const boardWinValue = function(winningArray) {
+        let winMarker = board[winningArray[0]];
+        if (winMarker === "X") {
+            return +10;
+        } else if (winMarker === "O") {
+            return -10;
+        } else {
+            return 0;
+        }
+    }
     
     const checkTie = function() {
         if (board.includes("")) {
@@ -127,7 +138,8 @@ const gameBoard = (function() {
         findWinner,
         colourWinningSquares,
         clearColours,
-        selectCompSquare
+        selectCompSquare,
+        boardWinValue
     };           
 })();
 
@@ -206,6 +218,7 @@ const displayController = (function() {
     menuBtn.addEventListener('click', function() {
         modalPlayers.style.display = "block";
         modalGame.style.display = "block";
+        playerInput2.value = "";
         showElement(playerInput2);
         showElement(playerTwoLabel);
         fullClear();
@@ -309,9 +322,10 @@ const game = (function() {
             // pass
         } else {
             gameBoard.board[gameBoard.selectCompSquare()] = currentPlayer().marker
-            gameBoard.render();      
+            gameBoard.render();   
+            changeTurn(); 
         }
-        changeTurn();
+        
     }
     
     const playTurnOnePlayer = function(e) {
@@ -338,31 +352,50 @@ const game = (function() {
 
     const gameWin = function() {
         gameBoard.colourWinningSquares(gameBoard.findWinner());
-        let winText = `${findWinningPlayer().name} wins!`
+        console.log(gameBoard.boardWinValue(gameBoard.findWinner()));
+        let winText = `${findWinningPlayer().name} wins!`;
+        if (findWinningPlayer().name === "Computer") {
+            changeTurn();
+        } 
         gameBoard.clearBoard();
-        displayController.resultsText.textContent = winText;
-        displayController.showResult();
-        displayController.displayPlayAgain(currentPlayer().name);
+        displayController.resultsText.textContent = winText;        
     };
 
     const gameTie = function() {
         gameBoard.clearBoard();
         displayController.resultsText.textContent = "It's a Tie!";
-        displayController.showResult();
-        displayController.displayPlayAgain(currentPlayer().name);
     };
 
     const gameOutcome = function() {
         if (gameBoard.checkWin()) {
-            gameWin();            
+            gameWin();    
+            displayController.showResult();
+            displayController.displayPlayAgain(currentPlayer().name);        
         } else if (gameBoard.checkTie()) {
             gameTie();
+            displayController.showResult();
+            displayController.displayPlayAgain(currentPlayer().name); 
         } else {
             // pass
         }
         
     }
     
+    const gameOutcomeSinglePlayer = function() {
+        if (gameBoard.checkWin()) {
+            gameWin();
+            displayController.showResult();
+            displayController.displayPlayAgain(displayController.currentPlayers()[0].name);    
+            changeTurn();   
+        } else if (gameBoard.checkTie()) {
+            gameTie();   
+            displayController.showResult();
+            displayController.displayPlayAgain(displayController.currentPlayers()[0].name);    
+        } else {
+            // pass
+        }
+        
+    }
 
     const twoPlayer = function() {
         gameBoard.boardSquares.forEach(function(square) {
@@ -377,7 +410,7 @@ const game = (function() {
         gameBoard.boardSquares.forEach(function(square) {
             square.addEventListener('click', function(e) {
                 playTurnOnePlayer(e);
-                gameOutcome();
+                gameOutcomeSinglePlayer();
             });
         });
     }
