@@ -1,13 +1,9 @@
 const gameBoard = ["X", "O", "O",
-                 "O", "O", "X",
-                 "X", "", ""];
+                   "O", "O", "X",
+                   "X", "X", ""];
 
 const Player = function(name, marker) {
-    const placeMarker = (event) => {
-        let squareSelected = event.target.getAttribute("data-id");
-        gameBoard.board[squareSelected] = marker;
-    };
-    return { placeMarker, name, marker };
+    return { name, marker };
 };
 
 const player1 = Player("human", "O");
@@ -96,10 +92,11 @@ let indexFilter = function(array) {
     return emptyIndicies;
 }
 
+let fc = 0;
 // The main minimax function
 
 const minimax = function(board, player) {
-
+ 
     // Base case for recursion should return +10 for AI win and -10 for human win, and 0 for a tie.
     if (findWinner(board) != false) {
         if (winningPlayer(board).name === "human") {
@@ -118,44 +115,50 @@ const minimax = function(board, player) {
     let moves = [];
 
     // Go through each empty space available and try putting the current player's marker in that space. Then we have to check for win/tie, and if not then go through empty spaces again, select one, etc, etc. The recursion loop should be here. 
-    emptySpaces.forEach(space => {
+    for (let i = 0; i < emptySpaces.length; i++) {
+        let id = emptySpaces[i];
         let move = {};
-        move.id = space;
-        let savedBoardSpace = board[space];
-        board[space] = player.marker;
-        
+        move.id = id;
+        let savedBoardSpace = board[id];
+        board[id] = player.marker;
+
         if (player === player1) {
             move.evaluation = minimax(board, player2).evaluation;
+            fc++;
         } else {
             move.evaluation = minimax(board, player1).evaluation;
-        }        
-        board[space] = savedBoardSpace;
-        moves.push(move);
-    });
+            fc++
+        }
 
+        board[id] = savedBoardSpace;
+        moves.push(move);
+    }
 
     let bestMove;
     if (player.name === "computer") {
         let bestEvaluation = -Infinity;
-        moves.forEach(move => {
-            if (move.evaluation > bestEvaluation) {
-                bestEvaluation = move.evaluation;
-                bestMove = move;
+        for (let i = 0; i < moves.length; i++) {
+            if (moves[i].evaluation > bestEvaluation) {
+                bestEvaluation = moves[i].evaluation;
+                bestMove = moves[i];
             }
-        });
+        }
 
     } else {
         let bestEvaluation = +Infinity;
-        moves.forEach(move => {
-            if (move.evaluation < bestEvaluation) {
-                bestEvaluation = move.evaluation;
-                bestMove = move;
+        for (let i = 0; i < moves.length; i++) {
+            if (moves[i].evaluation < bestEvaluation) {
+                bestEvaluation = moves[i].evaluation;
+                bestMove = moves[i];
             }
-        });
+        }
     }
+
+
 
     return bestMove;
 
 
-
 }
+
+
