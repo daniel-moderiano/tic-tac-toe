@@ -1,5 +1,5 @@
 const gameBoard = ["X", "", "O",
-                 "X", "X", "X",
+                 "X", "", "X",
                  "O", "O", ""];
 
 const Player = function(name, marker) {
@@ -85,10 +85,54 @@ const checkTie = function(board) {
     }
 }
 
+// Return empty spaces and indices on the gameBoard
+let indexFilter = function(array) {
+    let emptyIndicies = [];
+    for (let i = 0; i < array.length; i++) {
+        if (array[i] === "") {
+            emptyIndicies.push(i);
+        }
+    }
+    return emptyIndicies;
+}
+
 // The main minimax function
 
-const minimax = function(gameData, player) {
+const minimax = function(board, player) {
 
+    // Base case for recursion should return +10 for AI win and -10 for human win, and 0 for a tie.
+    if (findWinner(board) != false) {
+        if (winningPlayer(board).name === "human") {
+            return { evaluation: -10 };
+        } else {
+            return { evaluation: +10 }
+        }
+    } else if (checkTie(board) === true) {
+        return { evaluation: 0 }
+    }
 
+    // Analyse current board to identify empty spaces
+    let emptySpaces = indexFilter(board);
+
+    // Create an array to store all of the moves tested by the AI, which should be objects that list the index where the marker was played, and the evaluation of the board as a result of that placement. 
+    let moves = [];
+
+    // Go through each empty space available and try putting the current player's marker in that space. Then we have to check for win/tie, and if not then go through empty spaces again, select one, etc, etc. The recursion loop should be here. 
+    emptySpaces.forEach(space => {
+        let move = {};
+        board[space] = player.marker;
+        move.id = space;
+        if (player === player1) {
+            console.log("Player 1");
+            move.evaluation = minimax(board, player2).evaluation;
+        } else {
+            console.log("Player 2");
+            move.evaluation = minimax(board, player1).evaluation;
+        }        
+        board[space] = "";
+        moves.push(move);
+    });
+
+    return moves;
 
 }
