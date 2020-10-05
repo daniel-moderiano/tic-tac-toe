@@ -1,6 +1,6 @@
-const gameBoard = ["X", "", "O",
-                 "X", "", "X",
-                 "O", "O", ""];
+const gameBoard = ["X", "O", "O",
+                 "O", "O", "X",
+                 "X", "", ""];
 
 const Player = function(name, marker) {
     const placeMarker = (event) => {
@@ -80,7 +80,7 @@ const boardWinValue = function(board, winningArray) {
 const checkTie = function(board) {
     if (board.includes("")) {
         return false;
-    } else if (!checkWin()){
+    } else if (!checkWin(board)){
         return true;
     }
 }
@@ -120,19 +120,42 @@ const minimax = function(board, player) {
     // Go through each empty space available and try putting the current player's marker in that space. Then we have to check for win/tie, and if not then go through empty spaces again, select one, etc, etc. The recursion loop should be here. 
     emptySpaces.forEach(space => {
         let move = {};
-        board[space] = player.marker;
         move.id = space;
+        let savedBoardSpace = board[space];
+        board[space] = player.marker;
+        
         if (player === player1) {
-            console.log("Player 1");
             move.evaluation = minimax(board, player2).evaluation;
         } else {
-            console.log("Player 2");
             move.evaluation = minimax(board, player1).evaluation;
         }        
-        board[space] = "";
+        board[space] = savedBoardSpace;
         moves.push(move);
     });
 
-    return moves;
+
+    let bestMove;
+    if (player.name === "computer") {
+        let bestEvaluation = -Infinity;
+        moves.forEach(move => {
+            if (move.evaluation > bestEvaluation) {
+                bestEvaluation = move.evaluation;
+                bestMove = move;
+            }
+        });
+
+    } else {
+        let bestEvaluation = +Infinity;
+        moves.forEach(move => {
+            if (move.evaluation < bestEvaluation) {
+                bestEvaluation = move.evaluation;
+                bestMove = move;
+            }
+        });
+    }
+
+    return bestMove;
+
+
 
 }
