@@ -79,6 +79,7 @@ const gameBoard = (function() {
             case (board[2] === board[4] && board[2] === board[6] && board[2] != ""):
                 return [2, 4, 6];
         };
+        return false;
     };
 
     const boardWinValue = function(winningArray) {
@@ -98,6 +99,18 @@ const gameBoard = (function() {
         } else if (!checkWin()){
             return true;
         }
+    }
+
+    const winningPlayer = function() {
+        let winLocation = findWinner();
+        let winMarker = board[winLocation[0]];
+        let winner;
+        displayController.currentPlayers().forEach(player => {
+            if (player.marker === winMarker) {
+                winner = player;
+            }
+        });
+        return winner;
     }
 
     const colourWinningSquares = function(winArray) {
@@ -139,7 +152,9 @@ const gameBoard = (function() {
         colourWinningSquares,
         clearColours,
         selectCompSquare,
-        boardWinValue
+        boardWinValue,
+        winningPlayer,
+        indexFilter
     };           
 })();
 
@@ -317,11 +332,76 @@ const game = (function() {
         }
     };
 
+    const minimax = function(player) {
+ 
+        // Base case for recursion should return +10 for AI win and -10 for human win, and 0 for a tie.
+        if (gameBoard.findWinner() != false) {
+            if (gameBoard.winningPlayer().name != "Computer") {
+                return { evaluation: -10 };
+            } else {
+                return { evaluation: +10 }
+            }
+        } else if (gameBoard.checkTie(gameBoard.board) === true) {
+            return { evaluation: 0 }
+        }
+    
+        // Analyse current board to identify empty spaces
+        let emptySpaces = gameBoard.indexFilter(gameBoard.board);
+    
+        // Create an array to store all of the moves tested by the AI, which should be objects that list the index where the marker was played, and the evaluation of the board as a result of that placement. 
+        let moves = [];
+    
+        // Go through each empty space available and try putting the current player's marker in that space. Then we have to check for win/tie, and if not then go through empty spaces again, select one, etc, etc. The recursion loop should be here. 
+        for (let i = 0; i < emptySpaces.length; i++) {
+            let id = emptySpaces[i];
+            let move = {};
+            move.id = id;
+            let savedBoardSpace = gameBoard.board[id];
+            gameBoard.board[id] = player.marker;
+    
+            if (player.name === "Computer") {
+                move.evaluation = minimax(displayController.currentPlayers()[0]).evaluation;
+            } else {
+                move.evaluation = minimax(displayController.currentPlayers()[1]).evaluation;
+            }
+    
+            gameBoard.board[id] = savedBoardSpace;
+            moves.push(move);
+        }
+    
+        let bestMove;
+        if (player.name === "Computer") {
+            let bestEvaluation = -Infinity;
+            for (let i = 0; i < moves.length; i++) {
+                if (moves[i].evaluation > bestEvaluation) {
+                    bestEvaluation = moves[i].evaluation;
+                    bestMove = moves[i];
+                }
+            }
+    
+        } else {
+            let bestEvaluation = +Infinity;
+            for (let i = 0; i < moves.length; i++) {
+                if (moves[i].evaluation < bestEvaluation) {
+                    bestEvaluation = moves[i].evaluation;
+                    bestMove = moves[i];
+                }
+            }
+        }
+    
+    
+    
+        return bestMove;
+    
+    
+    }
+
     const compTurn = function() {
         if (gameBoard.checkWin()) {
             // pass
         } else {
-            gameBoard.board[gameBoard.selectCompSquare()] = currentPlayer().marker
+            console.log(minimax(currentPlayer()));
+            gameBoard.board[minimax(currentPlayer()).id] = currentPlayer().marker
             gameBoard.render();   
             changeTurn(); 
         }
@@ -439,7 +519,10 @@ const game = (function() {
         gameTie,
         gameWin,
         findWinningPlayer,
-        gameMode
+        gameMode, 
+        minimax
     };
 })();
+
+
 

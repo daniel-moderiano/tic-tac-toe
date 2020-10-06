@@ -83,7 +83,7 @@ main {
     background-color: rgba(255, 255, 255);
 }
 
-.form-container, .game {
+.form-container {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -97,7 +97,7 @@ main {
 }
 
 .modal--game {
-    display: none;
+    display: block;
     position: fixed;
     z-index: 2;
     left: 0;
@@ -108,3 +108,39 @@ main {
     background-color: rgba(255, 255, 255);
 }
 
+.game__button {
+    width: 15rem;
+    height: 15rem;
+    font-size: 2rem;
+   
+    border: 1px solid black;
+}
+
+.game__button:hover {
+    background-color: rgb(255, 200, 200);
+}
+
+.game {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 30rem;
+    padding: 2rem;
+ 
+    margin: 0 auto;
+    width: 30rem;
+
+    animation-name: modal-open;
+    animation-duration: 0.6s;
+}
+
+.game__buttons {
+    display: flex;
+    border: 1px solid black;
+    padding: 1rem;
+}
+
+.game__title {
+    font-size: 2.5rem;
+    padding-bottom: 2rem;
+}

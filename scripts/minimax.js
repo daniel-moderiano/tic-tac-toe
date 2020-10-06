@@ -62,16 +62,6 @@ const winningPlayer = function(board) {
     return winner;
 }
 
-const boardWinValue = function(board, winningArray) {
-    let winMarker = board[winningArray[0]];
-    if (winMarker === "X") {
-        return +10;
-    } else if (winMarker === "O") {
-        return -10;
-    } else {
-        return 0;
-    }
-}
 
 const checkTie = function(board) {
     if (board.includes("")) {
