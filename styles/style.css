@@ -70,9 +70,8 @@ main {
     display: none;
 }
 
-
 .modal--players {
-    display: none;
+    display: block;
     position: fixed;
     z-index: 1;
     left: 0;
@@ -80,21 +79,117 @@ main {
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: #ff5d8f;
+    background-color: #ffffff;
+    animation-name: modal-open;
+    animation-duration: 0.6s;
+}
+
+.players__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 40rem;
+    padding: 2rem;
+    margin: 8rem auto 0 auto;
+    animation-name: modal-open;
+    animation-duration: 0.6s;
+}
+
+.players__fields {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    margin-bottom: 2rem;
+}
+
+.players__fields--1p {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 1rem;
+    margin-bottom: 0;
+}
+
+.players__label {
+    font-size: 1.8rem;
+    font-family: "Comfortaa", sans-serif;
+    color: #f374ae;
+    margin-bottom: 0.5rem;
+}
+
+.players__input {
+    border: 1px solid #f374ae;
+    border-radius: 120px;
+    height: 1.8rem;
+    width: 13rem;
+    padding-left: 0.5rem;
+    font-family: "Comfortaa", sans-serif;
+}
+
+::placeholder {
+    color: #b5b6b8;
+    font-family: "Comfortaa", sans-serif;
+}
+
+.players__fields--one, .players__fields--two {
+    display: flex;
+    align-items: center;
+    /* Add align-items: center; for one player */
+    flex-direction: column;
+    padding: 1rem;
+}
+
+.players__fields--single {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 1rem;
+}
+
+.players {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    height: 30rem;
 }
 
 .form-container {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    padding: 2rem;
-    background-color: #f4f4f4;
-    margin: 20% auto;
+    align-items: center;
+
     width: 30rem;
-    box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 7px 20px 0 rgba(0, 0, 0, 0.17);
-    animation-name: modal-open;
-    animation-duration: 0.6s;
+
+    /* animation-name: modal-open;
+    animation-duration: 0.6s; */
 }
+
+
+.players__btn {
+    width: 15rem;
+    height: 4rem;
+    font-size: 1.8rem;
+    font-family: "Comfortaa", sans-serif;
+    color: #f29559;
+    margin: 0 1rem;
+    border-radius: 120px;
+    border: 1px solid;
+    background-color: #ffffff;
+}
+
+.players__btn:hover {
+    background-color: #f29559;
+    color: #ffffff;
+    border: none;
+}
+
+.game__title--form {
+    font-size: 5.5rem;
+    padding-bottom: 2rem;
+    font-family: "Comfortaa", sans-serif;
+    color: #f374ae;
+}
+
 
 .modal--game {
     display: block;
@@ -120,6 +215,7 @@ main {
     background-color: #ffffff;
     /* box-shadow: 2px 4px 10px 2px rgba(0, 0, 0, 0.1); */
 }
+
 
 .game__button:hover {
     background-color: #f374ae;
@@ -159,3 +255,8 @@ main {
 --atomic-tangerine: #f29559;
 --hot-pink: #f374ae;
 --white: #ffffff; */
+
+@keyframes modal-open {
+    from{opacity: 0;}
+    to{opacity: 1;}
+}

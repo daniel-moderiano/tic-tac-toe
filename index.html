@@ -33,19 +33,31 @@
             <button class="button--menu">Main menu</button>
         </div>
 
-        <div class="modal--players">
-            <div class="form-container">
-                <form class="players">
-                    <fieldset>
-                        <label class="players__label" for="player1">Player 1</label>
-                        <input placeholder="Enter player name" class="players__input players__input--p1" id="player1" type="text">
-                        <label class="players__label players__label--p2" for="player2">Player 2</label>
-                        <input placeholder="Enter player name" class="players__input players__input--p2" id="player2" type="text">
-                    </fieldset>
-                    <button class="players__btn" type="button">Start game</button>
-                </form>
+        <div class="modal--players modal--players-one">
+            <div class="players__container">
+                <div class="game__title--form">Tic-Tac-Toe</div>
+                <div class="form-container">
+                    <form class="players">
+                        <fieldset class="players__fields">
+                            <div class="players__fields--one">
+                                <label class="players__label" for="player1">Player 1</label>
+                                <input placeholder="Enter player name" class="players__input players__input--p1" id="player1" type="text">
+                            </div>
+                            
+                            <div class="players__fields--two">
+                                <label class="players__label players__label--p2" for="player2">Player 2</label>
+                                <input placeholder="Enter player name" class="players__input players__input--p2" id="player2" type="text">
+                            </div>
+                            
+                        </fieldset>
+                        <button class="players__btn" type="button">Start game</button>
+                    </form>
+                </div>
             </div>
+            
         </div>
+
+
         
         <div class="modal--game">
             <div class="game">

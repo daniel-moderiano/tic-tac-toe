@@ -179,6 +179,9 @@ const displayController = (function() {
     const playerOneDisplay = document.querySelector(".player-display__symbols--p1");
     const playerTwoDisplay = document.querySelector(".player-display__symbols--p2");
 
+    const playerFields = document.querySelector(".players__fields");
+
+
     let players;
 
     const pullNameInputs = function() {
@@ -230,10 +233,19 @@ const displayController = (function() {
     const showResult = () => resultsText.classList.remove("results__text--invisible");
     const hideResult = () => resultsText.classList.add("results__text--invisible");   
     
+    const onePlayerInput = () => {
+        playerFields.classList.add("players__fields--1p");
+    };
+
+    const twoPlayerInput = () => {
+        playerFields.classList.remove("players__fields--1p");
+    };
+
     menuBtn.addEventListener('click', function() {
         modalPlayers.style.display = "block";
         modalGame.style.display = "block";
         playerInput2.value = "";
+        twoPlayerInput();
         showElement(playerInput2);
         showElement(playerTwoLabel);
         fullClear();
@@ -241,6 +253,7 @@ const displayController = (function() {
 
     multiplayerBtn.addEventListener('click', function() {
         modalGame.style.display = "none";
+        twoPlayerInput();
     })
 
     singlePlayerBtn.addEventListener('click', function() {
@@ -248,6 +261,7 @@ const displayController = (function() {
         playerInput2.value = "Computer";
         hideElement(playerTwoLabel);
         hideElement(playerInput2);
+        onePlayerInput();
     })
 
     const showElement = function(element) {
