@@ -242,8 +242,8 @@ const displayController = (function() {
     };
 
     menuBtn.addEventListener('click', function() {
-        modalPlayers.style.display = "block";
         modalGame.style.display = "block";
+        modalPlayers.style.display = "block";
         playerInput2.value = "";
         twoPlayerInput();
         showElement(playerInput2);
