@@ -248,6 +248,7 @@ const displayController = (function() {
         twoPlayerInput();
         showElement(playerInput2);
         showElement(playerTwoLabel);
+        game.removeGameModeEvent();
         fullClear();
     })
 
@@ -324,7 +325,49 @@ const game = (function() {
         }
     };
 
+    const removeGameModeEvent = function() {
+        gameBoard.boardSquares.forEach(function(square) {
+            square.removeEventListener('click', onePlayerEvents);
+            square.removeEventListener('click', twoPlayerEvents);
+        });
+    };
     // Consider abstraction to playTurn function below; not a great deal of functions and adds perhaps needless step.
+
+    // TODO: Address the fact that this function is re-added when you return to menu and start a new game!!!
+    // Remove event listener isn't working because the attached function is currently anonymous!!
+
+    const onePlayerEvents = function(e) {
+        playTurnOnePlayer(e);
+        gameOutcomeSinglePlayer();
+    }
+
+    const twoPlayerEvents = function(e) {
+        playTurnTwoPlayer(e);
+        gameOutcome();
+    }
+
+
+    const twoPlayer = function() {
+        gameBoard.boardSquares.forEach(function(square) {
+            square.addEventListener('click', twoPlayerEvents);
+        });
+    };
+
+    
+    const onePlayer = function() {
+        gameBoard.boardSquares.forEach(function(square) {
+            square.addEventListener('click', onePlayerEvents);
+        });
+    }
+
+    const gameMode = function() {
+        if (displayController.currentPlayers()[1].name === "Computer") {
+            onePlayer();
+        } else {
+            twoPlayer();
+        }
+    }
+    
   
     const playTurnTwoPlayer = function(e) {
         if (displayController.playerTurnDisplay.textContent != "") {
@@ -409,13 +452,18 @@ const game = (function() {
     
     
     }
+    // TODO: Figure out why this returns an ID of undefined when there is a tie
 
     const compTurn = function() {
         if (gameBoard.checkWin()) {
             // pass
         } else {
-            console.log(minimax(currentPlayer()));
-            gameBoard.board[minimax(currentPlayer()).id] = currentPlayer().marker
+            console.log(minimax(currentPlayer()).id);
+            if (minimax(currentPlayer()).id != undefined) {
+                gameBoard.board[minimax(currentPlayer()).id] = currentPlayer().marker
+            } else {
+                // pass
+            }
             gameBoard.render();   
             changeTurn(); 
         }
@@ -491,32 +539,7 @@ const game = (function() {
         
     }
 
-    const twoPlayer = function() {
-        gameBoard.boardSquares.forEach(function(square) {
-            square.addEventListener('click', function(e) {
-                playTurnTwoPlayer(e);
-                gameOutcome();
-            });
-        });
-    };
 
-    const onePlayer = function() {
-        gameBoard.boardSquares.forEach(function(square) {
-            square.addEventListener('click', function(e) {
-                playTurnOnePlayer(e);
-                gameOutcomeSinglePlayer();
-            });
-        });
-    }
-
-    const gameMode = function() {
-        if (displayController.currentPlayers()[1].name === "Computer") {
-            onePlayer();
-        } else {
-            twoPlayer();
-        }
-    }
-    
     
 
 
@@ -534,7 +557,12 @@ const game = (function() {
         gameWin,
         findWinningPlayer,
         gameMode, 
-        minimax
+        minimax,
+        removeGameModeEvent,
+        gameOutcome,
+        playTurnTwoPlayer, 
+        onePlayerEvents,
+        twoPlayerEvents
     };
 })();
 
