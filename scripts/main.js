@@ -180,7 +180,8 @@ const displayController = (function() {
     const playerTwoNameDisplay = document.querySelector(".player-display__name--p2");
     const playerOneSymbolDisplay = document.querySelector(".player-display__symbol--p1");
     const playerTwoSymbolDisplay = document.querySelector(".player-display__symbol--p2");
-
+    const playerDisplayContOne = document.querySelector(".player-display__container--p1");
+    const playerDisplayContTwo = document.querySelector(".player-display__container--p2");
     const playerFields = document.querySelector(".players__fields");
 
 
@@ -282,7 +283,8 @@ const displayController = (function() {
         showElement(resultsInstructions);
     }
   
-    return { resultsText, showResult, hideResult, currentPlayers, startBtn, showElement, hideElement, clearBtn, displayPlayAgain, resultsInstructions, playerTurnDisplay, playerInput2, playerInput1 };
+    return { resultsText, showResult, hideResult, currentPlayers, startBtn, showElement, hideElement, clearBtn, displayPlayAgain, resultsInstructions, playerTurnDisplay, playerInput2, playerInput1,
+    playerOneNameDisplay, playerTwoNameDisplay };
 
 })();
 
@@ -503,6 +505,11 @@ const game = (function() {
         if (findWinningPlayer().name === "Computer") {
             changeTurn();
         } 
+        if (findWinningPlayer() === displayController.currentPlayers()[0]) {
+            displayController.playerOneNameDisplay.classList.toggle("winner");
+        } else if (findWinningPlayer() === displayController.currentPlayers()[1]) {
+            displayController.playerTwoNameDisplay.classList.toggle("winner");
+        }
         gameBoard.clearBoard();
         displayController.resultsText.textContent = winText;        
     };

@@ -97,13 +97,21 @@ main {
 .player-display__name {
     font-family: "Comfortaa", sans-serif;
     color: #f29559;
-    font-size: 1.5rem;
+    font-size: 1.6rem;
+    padding-bottom: 0.75rem;
+}
+
+.player-display__symbol {
+    font-family: "Comfortaa", sans-serif;
+    color: #f29559;
+    font-size: 1.6rem;
 }
 
 .player-display__container {
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 8rem;
 }
 
 .results__text--invisible {
@@ -129,6 +137,10 @@ main {
     width: 40rem;
     padding: 2rem;
     margin: 8rem auto 0 auto;
+}
+
+.winner {
+    border: 1px solid black;
 }
 
 .players__fields {
