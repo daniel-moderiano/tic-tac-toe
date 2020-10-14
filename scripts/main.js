@@ -176,8 +176,10 @@ const displayController = (function() {
 
     const playerDisplay = document.querySelector(".player-display");
     const playerTurnDisplay = document.querySelector(".player-display__first-turn");
-    const playerOneDisplay = document.querySelector(".player-display__symbols--p1");
-    const playerTwoDisplay = document.querySelector(".player-display__symbols--p2");
+    const playerOneNameDisplay = document.querySelector(".player-display__name--p1");
+    const playerTwoNameDisplay = document.querySelector(".player-display__name--p2");
+    const playerOneSymbolDisplay = document.querySelector(".player-display__symbol--p1");
+    const playerTwoSymbolDisplay = document.querySelector(".player-display__symbol--p2");
 
     const playerFields = document.querySelector(".players__fields");
 
@@ -212,8 +214,10 @@ const displayController = (function() {
         players = createPlayers(pullNameInputs());
         modalPlayers.style.display = "none";
         playerTurnDisplay.textContent = `${currentPlayers()[0].name} starts!`;
-        playerOneDisplay.textContent = `${currentPlayers()[0].name} playing ${currentPlayers()[0].marker}`;
-        playerTwoDisplay.textContent = `${currentPlayers()[1].name} playing ${currentPlayers()[1].marker}`;
+        playerOneNameDisplay.textContent = `${currentPlayers()[0].name}`;
+        playerOneSymbolDisplay.textContent = `${currentPlayers()[0].marker}`;
+        playerTwoNameDisplay.textContent = `${currentPlayers()[1].name}`;
+        playerTwoSymbolDisplay.textContent = `${currentPlayers()[1].marker}`;
         game.gameMode();
     });
         

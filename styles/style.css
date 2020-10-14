@@ -29,11 +29,13 @@ main {
 
 .game-ui {
     display: flex;
+    align-items: center;
 }
 
 .board-platform {
     box-shadow: 0px 0px 25px 3px rgba(68, 69, 69, 0.1);
     padding: 2rem;
+    margin: 0 2rem;
 }
 
 .board-container {
@@ -61,7 +63,9 @@ main {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 2rem;
+    font-size: 3rem;
+    font-family: "Comfortaa", sans-serif;
+    color: #f374ae;
 }
 
 .board__square--coloured {
@@ -88,6 +92,18 @@ main {
     background-color: #f29559;
     color: #ffffff;
     border: none;
+}
+
+.player-display__name {
+    font-family: "Comfortaa", sans-serif;
+    color: #f29559;
+    font-size: 1.5rem;
+}
+
+.player-display__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .results__text--invisible {
