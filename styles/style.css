@@ -9,14 +9,13 @@ body {
 }
 
 .header {
-    /* padding: 1rem; */
     text-align: center;
 }
 
 h1 {
     font-size: 5.5rem;
-    /* padding-bottom: 2rem; */
-    /* margin-bottom: 1rem; */
+    margin-top: 4rem;
+    padding-bottom: 3rem;
     font-family: "Comfortaa", sans-serif;
     color: #f374ae;
 }
@@ -26,6 +25,10 @@ main {
     flex-direction: column;
     /* justify-content: center; */
     align-items: center;
+}
+
+.game-ui {
+    display: flex;
 }
 
 .board-platform {
@@ -92,7 +95,7 @@ main {
 }
 
 .modal--players {
-    display: none;
+    display: block;
     position: fixed;
     z-index: 1;
     left: 0;
@@ -201,7 +204,7 @@ main {
 
 
 .modal--game {
-    display: none;
+    display: block;
     position: fixed;
     z-index: 2;
     left: 0;

@@ -14,27 +14,37 @@
         <h1 class="header__title">Tic-Tac-Toe</h1>
     </header>
     <main class="main">
-        <div class="board-platform">
-            <div class="board-container">
-                <div class="board">
-                    <div data-id="0" class="board__square board__square-one"></div>
-                    <div data-id="1" class="board__square board__square-two"></div>
-                    <div data-id="2" class="board__square board__square-three"></div>
-                    <div data-id="3" class="board__square board__square-four"></div>
-                    <div data-id="4" class="board__square board__square-five"></div>
-                    <div data-id="5" class="board__square board__square-six"></div>
-                    <div data-id="6" class="board__square board__square-seven"></div>
-                    <div data-id="7" class="board__square board__square-eight"></div>
-                    <div data-id="8" class="board__square board__square-nine"></div>
+        <div class="game-ui">
+            <div class="player-display__symbols player-display__symbols--p1"></div>
+            <div class="board-platform">
+                <div class="board-container">
+                    <div class="board">
+                        <div data-id="0" class="board__square board__square-one"></div>
+                        <div data-id="1" class="board__square board__square-two"></div>
+                        <div data-id="2" class="board__square board__square-three"></div>
+                        <div data-id="3" class="board__square board__square-four"></div>
+                        <div data-id="4" class="board__square board__square-five"></div>
+                        <div data-id="5" class="board__square board__square-six"></div>
+                        <div data-id="6" class="board__square board__square-seven"></div>
+                        <div data-id="7" class="board__square board__square-eight"></div>
+                        <div data-id="8" class="board__square board__square-nine"></div>
+                    </div>
                 </div>
             </div>
+       
+                
+                <div class="player-display__symbols player-display__symbols--p2"></div>
+        
         </div>
+        
         
 
         <div class="button-div">
             <button class="button--clear">Clear board</button>
             <button class="button--menu">Main menu</button>
         </div>
+        
+        <div class="player-display__first-turn"></div>
 
         <div class="modal--players modal--players-one">
             <div class="players__container">
@@ -73,11 +83,6 @@
             </div>
         </div>
         
-        <div class="player-display">
-            <div class="player-display__first-turn"></div>
-            <div class="player-display__symbols player-display__symbols--p1"></div>
-            <div class="player-display__symbols player-display__symbols--p2"></div>
-        </div>
 
         <div class="results-container">
             <div class="results__text results__text--invisible"></div>
