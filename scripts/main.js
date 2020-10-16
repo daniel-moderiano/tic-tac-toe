@@ -84,7 +84,7 @@ const gameBoard = (function() {
 
     const boardWinValue = function(winningArray) {
         let winMarker = board[winningArray[0]];
-        if (winMarker === "X") {
+        if (winMarker === "\u2715") {
             return +10;
         } else if (winMarker === "O") {
             return -10;
@@ -160,7 +160,7 @@ const gameBoard = (function() {
 
 const displayController = (function() {
 
-    const clearBtn = document.querySelector(".button--clear");
+    const restartBtn = document.querySelector(".button--restart");
     const resultsText = document.querySelector(".results__text");
 
     const playerInput1 = document.querySelector(".players__input--p1");
@@ -206,7 +206,7 @@ const displayController = (function() {
     };
     
     const createPlayers = function(playerNames) {
-        const player1 = Player(playerNames[0], "X");
+        const player1 = Player(playerNames[0], "\u2715");
         const player2 = Player(playerNames[1], "O");
         return [player1, player2];
     };
@@ -233,7 +233,7 @@ const displayController = (function() {
         game.resetTurn();
     }
 
-    clearBtn.addEventListener('click', fullClear);
+    restartBtn.addEventListener('click', fullClear);
 
     const showResult = () => resultsText.classList.remove("results__text--invisible");
     const hideResult = () => resultsText.classList.add("results__text--invisible");   
@@ -279,11 +279,11 @@ const displayController = (function() {
     }
 
     const displayPlayAgain = function(player) {
-        resultsInstructions.textContent = `Press 'Clear Board' to restart, or ${player} can select a square to restart!`;
+        resultsInstructions.textContent = `${player} can select a square to restart!`;
         showElement(resultsInstructions);
     }
   
-    return { resultsText, showResult, hideResult, currentPlayers, startBtn, showElement, hideElement, clearBtn, displayPlayAgain, resultsInstructions, playerTurnDisplay, playerInput2, playerInput1,
+    return { resultsText, showResult, hideResult, currentPlayers, startBtn, showElement, hideElement, restartBtn, displayPlayAgain, resultsInstructions, playerTurnDisplay, playerInput2, playerInput1,
     playerOneNameDisplay, playerTwoNameDisplay };
 
 })();
