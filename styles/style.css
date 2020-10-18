@@ -69,7 +69,8 @@ main {
 }
 
 .board__square--coloured {
-    background-color: rgb(184, 232, 255);
+    background-color: #70EB95;
+    /* color: #ffffff; */
 }
 
 .button-div {
@@ -88,7 +89,7 @@ main {
     background-color: #ffffff;
 }
 
-.button--menu:hover, .button--clear:hover {
+.button--menu:hover, .button--restart:hover {
     background-color: #f29559;
     color: #ffffff;
     border: none;
@@ -139,9 +140,6 @@ main {
     margin: 8rem auto 0 auto;
 }
 
-.winner {
-    border: 1px solid black;
-}
 
 .players__fields {
     display: flex;

@@ -15,8 +15,6 @@ const gameBoard = (function() {
         for (let i = 0; i < board.length; i++) {
             board[i] = "";
         }
-        displayController.hideResult();
-        displayController.hideElement(displayController.resultsInstructions);
     };
 
     const clearColours = function() {
@@ -161,7 +159,7 @@ const gameBoard = (function() {
 const displayController = (function() {
 
     const restartBtn = document.querySelector(".button--restart");
-    const resultsText = document.querySelector(".results__text");
+  
 
     const playerInput1 = document.querySelector(".players__input--p1");
     const playerInput2 = document.querySelector(".players__input--p2");
@@ -171,7 +169,7 @@ const displayController = (function() {
     const multiplayerBtn = document.querySelector(".game__button--2p");
     const menuBtn = document.querySelector(".button--menu");
     const startBtn = document.querySelector(".players__btn");
-    const resultsInstructions = document.querySelector(".results__instructions");
+
     const playerTwoLabel = document.querySelector(".players__label--p2");
 
     const playerDisplay = document.querySelector(".player-display");
@@ -182,6 +180,8 @@ const displayController = (function() {
     const playerTwoSymbolDisplay = document.querySelector(".player-display__symbol--p2");
     const playerDisplayContOne = document.querySelector(".player-display__container--p1");
     const playerDisplayContTwo = document.querySelector(".player-display__container--p2");
+    const playerOneWinText = document.querySelector(".player-display__win--p1");
+    const playerTwoWinText = document.querySelector(".player-display__win--p2");
     const playerFields = document.querySelector(".players__fields");
 
 
@@ -234,9 +234,6 @@ const displayController = (function() {
     }
 
     restartBtn.addEventListener('click', fullClear);
-
-    const showResult = () => resultsText.classList.remove("results__text--invisible");
-    const hideResult = () => resultsText.classList.add("results__text--invisible");   
     
     const onePlayerInput = () => {
         playerFields.classList.add("players__fields--1p");
@@ -278,13 +275,9 @@ const displayController = (function() {
         element.style.display = "none";
     }
 
-    const displayPlayAgain = function(player) {
-        resultsInstructions.textContent = `${player} can select a square to restart!`;
-        showElement(resultsInstructions);
-    }
   
-    return { resultsText, showResult, hideResult, currentPlayers, startBtn, showElement, hideElement, restartBtn, displayPlayAgain, resultsInstructions, playerTurnDisplay, playerInput2, playerInput1,
-    playerOneNameDisplay, playerTwoNameDisplay };
+    return { currentPlayers, startBtn, showElement, hideElement, restartBtn, playerTurnDisplay, playerInput2, playerInput1,
+    playerOneNameDisplay, playerTwoNameDisplay, playerDisplayContOne, playerDisplayContTwo, playerOneSymbolDisplay, playerTwoSymbolDisplay, playerOneWinText, playerTwoWinText };
 
 })();
 
@@ -380,12 +373,7 @@ const game = (function() {
             displayController.playerTurnDisplay.textContent = "";
         }
 
-        gameBoard.clearColours();
-        if (!displayController.resultsText.classList.contains("results__text--invisible")) {
-            displayController.hideResult();
-            displayController.hideElement(displayController.resultsInstructions);
-        }
-        
+        gameBoard.clearColours();        
         if (gameBoard.checkOccupied(e) === false) {
             currentPlayer().placeMarker(e);
             changeTurn();
@@ -481,12 +469,7 @@ const game = (function() {
             displayController.playerTurnDisplay.textContent = "";
         }
 
-        gameBoard.clearColours();
-        if (!displayController.resultsText.classList.contains("results__text--invisible")) {
-            displayController.hideResult();
-            displayController.hideElement(displayController.resultsInstructions);
-        }
-        
+        gameBoard.clearColours();        
         if (gameBoard.checkOccupied(e) === false) {
             currentPlayer().placeMarker(e);
             changeTurn();
@@ -501,33 +484,29 @@ const game = (function() {
     const gameWin = function() {
         gameBoard.colourWinningSquares(gameBoard.findWinner());
         console.log(gameBoard.boardWinValue(gameBoard.findWinner()));
-        let winText = `${findWinningPlayer().name} wins!`;
         if (findWinningPlayer().name === "Computer") {
             changeTurn();
         } 
         if (findWinningPlayer() === displayController.currentPlayers()[0]) {
-            displayController.playerOneNameDisplay.classList.toggle("winner");
+            displayController.playerOneWinText.textContent = "Winner!";
         } else if (findWinningPlayer() === displayController.currentPlayers()[1]) {
-            displayController.playerTwoNameDisplay.classList.toggle("winner");
+            displayController.playerTwoWinText.textContent = "Winner!";
         }
         gameBoard.clearBoard();
-        displayController.resultsText.textContent = winText;        
+       
     };
 
     const gameTie = function() {
         gameBoard.clearBoard();
-        displayController.resultsText.textContent = "It's a Tie!";
     };
 
     const gameOutcome = function() {
         if (gameBoard.checkWin()) {
             gameWin();    
-            displayController.showResult();
-            displayController.displayPlayAgain(currentPlayer().name);        
+      
         } else if (gameBoard.checkTie()) {
             gameTie();
-            displayController.showResult();
-            displayController.displayPlayAgain(currentPlayer().name); 
+
         } else {
             // pass
         }
@@ -536,14 +515,10 @@ const game = (function() {
     
     const gameOutcomeSinglePlayer = function() {
         if (gameBoard.checkWin()) {
-            gameWin();
-            displayController.showResult();
-            displayController.displayPlayAgain(displayController.currentPlayers()[0].name);    
+            gameWin();  
             changeTurn();   
         } else if (gameBoard.checkTie()) {
-            gameTie();   
-            displayController.showResult();
-            displayController.displayPlayAgain(displayController.currentPlayers()[0].name);    
+            gameTie();    
         } else {
             // pass
         }
