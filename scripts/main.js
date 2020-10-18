@@ -172,8 +172,8 @@ const displayController = (function() {
 
     const playerTwoLabel = document.querySelector(".players__label--p2");
 
-    const playerDisplay = document.querySelector(".player-display");
-    const playerTurnDisplay = document.querySelector(".player-display__first-turn");
+
+
     const playerOneNameDisplay = document.querySelector(".player-display__name--p1");
     const playerTwoNameDisplay = document.querySelector(".player-display__name--p2");
     const playerOneSymbolDisplay = document.querySelector(".player-display__symbol--p1");
@@ -214,7 +214,6 @@ const displayController = (function() {
     startBtn.addEventListener("click", () => {
         players = createPlayers(pullNameInputs());
         modalPlayers.style.display = "none";
-        playerTurnDisplay.textContent = `${currentPlayers()[0].name} starts!`;
         playerOneNameDisplay.textContent = `${currentPlayers()[0].name}`;
         playerOneSymbolDisplay.textContent = `${currentPlayers()[0].marker}`;
         playerTwoNameDisplay.textContent = `${currentPlayers()[1].name}`;
@@ -276,7 +275,7 @@ const displayController = (function() {
     }
 
   
-    return { currentPlayers, startBtn, showElement, hideElement, restartBtn, playerTurnDisplay, playerInput2, playerInput1,
+    return { currentPlayers, startBtn, showElement, hideElement, restartBtn, playerInput2, playerInput1,
     playerOneNameDisplay, playerTwoNameDisplay, playerDisplayContOne, playerDisplayContTwo, playerOneSymbolDisplay, playerTwoSymbolDisplay, playerOneWinText, playerTwoWinText };
 
 })();
@@ -369,9 +368,6 @@ const game = (function() {
     
   
     const playTurnTwoPlayer = function(e) {
-        if (displayController.playerTurnDisplay.textContent != "") {
-            displayController.playerTurnDisplay.textContent = "";
-        }
 
         gameBoard.clearColours();        
         if (gameBoard.checkOccupied(e) === false) {
@@ -465,9 +461,7 @@ const game = (function() {
     }
     
     const playTurnOnePlayer = function(e) {
-        if (displayController.playerTurnDisplay.textContent != "") {
-            displayController.playerTurnDisplay.textContent = "";
-        }
+
 
         gameBoard.clearColours();        
         if (gameBoard.checkOccupied(e) === false) {
