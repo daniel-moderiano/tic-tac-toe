@@ -138,6 +138,8 @@ const gameBoard = (function() {
         return randomSquare(indexFilter(gameBoard.board));
     }
 
+    
+
     return { 
         board, 
         boardSquares, 
@@ -228,6 +230,7 @@ const displayController = (function() {
     const fullClear = function() {
         gameBoard.clearBoard();
         gameBoard.clearColours();
+        displayController.clearWinner();
         gameBoard.render();
         game.resetTurn();
     }
@@ -274,9 +277,13 @@ const displayController = (function() {
         element.style.display = "none";
     }
 
+    const clearWinner = function() {
+        playerOneWinText.textContent = "";
+        playerTwoWinText.textContent = "";
+    }
   
     return { currentPlayers, startBtn, showElement, hideElement, restartBtn, playerInput2, playerInput1,
-    playerOneNameDisplay, playerTwoNameDisplay, playerDisplayContOne, playerDisplayContTwo, playerOneSymbolDisplay, playerTwoSymbolDisplay, playerOneWinText, playerTwoWinText };
+    playerOneNameDisplay, playerTwoNameDisplay, playerDisplayContOne, playerDisplayContTwo, playerOneSymbolDisplay, playerTwoSymbolDisplay, playerOneWinText, playerTwoWinText, clearWinner };
 
 })();
 
@@ -369,7 +376,8 @@ const game = (function() {
   
     const playTurnTwoPlayer = function(e) {
 
-        gameBoard.clearColours();        
+        gameBoard.clearColours();
+        displayController.clearWinner();        
         if (gameBoard.checkOccupied(e) === false) {
             currentPlayer().placeMarker(e);
             changeTurn();
@@ -463,7 +471,8 @@ const game = (function() {
     const playTurnOnePlayer = function(e) {
 
 
-        gameBoard.clearColours();        
+        gameBoard.clearColours();     
+        displayController.clearWinner();   
         if (gameBoard.checkOccupied(e) === false) {
             currentPlayer().placeMarker(e);
             changeTurn();
@@ -475,7 +484,9 @@ const game = (function() {
         
     };
 
-    const gameWin = function() {
+    // TODO: With a change in turn at end of game, the winner text switches to P1 when comp wins
+
+    const gameWinMultiplayer = function() {
         gameBoard.colourWinningSquares(gameBoard.findWinner());
         console.log(gameBoard.boardWinValue(gameBoard.findWinner()));
         if (findWinningPlayer().name === "Computer") {
@@ -490,13 +501,24 @@ const game = (function() {
        
     };
 
+    const gameWinSinglePlayer = function() {
+        gameBoard.colourWinningSquares(gameBoard.findWinner());
+        console.log(gameBoard.boardWinValue(gameBoard.findWinner()));
+        if (findWinningPlayer().name === "Computer") {
+            changeTurn();
+            displayController.playerTwoWinText.textContent = "Winner!";
+        } 
+        gameBoard.clearBoard();
+       
+    };
+
     const gameTie = function() {
         gameBoard.clearBoard();
     };
 
     const gameOutcome = function() {
         if (gameBoard.checkWin()) {
-            gameWin();    
+            gameWinMultiplayer();    
       
         } else if (gameBoard.checkTie()) {
             gameTie();
@@ -509,7 +531,7 @@ const game = (function() {
     
     const gameOutcomeSinglePlayer = function() {
         if (gameBoard.checkWin()) {
-            gameWin();  
+            gameWinSinglePlayer();  
             changeTurn();   
         } else if (gameBoard.checkTie()) {
             gameTie();    
@@ -534,7 +556,6 @@ const game = (function() {
         playTurnTwoPlayer,
         playTurnOnePlayer,
         gameTie,
-        gameWin,
         findWinningPlayer,
         gameMode, 
         minimax,

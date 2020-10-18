@@ -106,6 +106,7 @@ main {
     font-family: "Comfortaa", sans-serif;
     color: #f29559;
     font-size: 1.6rem;
+    padding-bottom: 0.5rem;
 }
 
 .player-display__container {
@@ -113,6 +114,12 @@ main {
     flex-direction: column;
     align-items: center;
     width: 8rem;
+}
+
+.player-display__win {
+    font-family: "Comfortaa", sans-serif;
+    color: #f29559;
+    font-size: 1.6rem;
 }
 
 .results__text--invisible {
