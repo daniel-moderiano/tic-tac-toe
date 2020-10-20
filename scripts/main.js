@@ -38,42 +38,24 @@ const gameBoard = (function() {
         switch(true) {
             case (board[0] === board[1] && board[0] === board[2] && board[0] != ""):
                 return [0, 1, 2];
-    
             case (board[3] === board[4] && board[3] === board[5] && board[3] != ""):
                 return [3, 4, 5];
-    
             case (board[6] === board[7] && board[6] === board[8] && board[6] != ""):
-                return [6, 7, 8];
-           
+                return [6, 7, 8]
             case (board[0] === board[3] && board[0] === board[6] && board[0] != ""):
                 return [0, 3, 6];
-    
             case (board[1] === board[4] && board[1] === board[7] && board[7] != ""):
-                return [1, 4, 7];
-    
+                return [1, 4, 7];    
             case (board[2] === board[5] && board[2] === board[8] && board[2] != ""):
-                return [2, 5, 8];
-    
+                return [2, 5, 8];   
             case (board[0] === board[4] && board[0] === board[8] && board[0] != ""):
-                return [0, 4, 8];
-    
+                return [0, 4, 8];   
             case (board[2] === board[4] && board[2] === board[6] && board[2] != ""):
                 return [2, 4, 6];
         };
         return false;
     };
-
-    const boardWinValue = function(winningArray) {
-        let winMarker = board[winningArray[0]];
-        if (winMarker === "\u2715") {
-            return +10;
-        } else if (winMarker === "O") {
-            return -10;
-        } else {
-            return 0;
-        }
-    }
-    
+   
     const checkTie = function() {
         if (board.includes("")) {
             return false;
@@ -116,12 +98,9 @@ const gameBoard = (function() {
         return array[index];
     }
     
-    
     const selectCompSquare = function() {
         return randomSquare(indexFilter(gameBoard.board));
     }
-
-    
 
     return { 
         board, 
@@ -134,7 +113,6 @@ const gameBoard = (function() {
         colourWinningSquares,
         clearColours,
         selectCompSquare,
-        boardWinValue,
         winningPlayer,
         indexFilter
     };           
@@ -143,8 +121,6 @@ const gameBoard = (function() {
 const displayController = (function() {
 
     const restartBtn = document.querySelector(".button--restart");
-  
-
     const playerInput1 = document.querySelector(".players__input--p1");
     const playerInput2 = document.querySelector(".players__input--p2");
     const modalPlayers = document.querySelector(".modal--players");
@@ -153,22 +129,15 @@ const displayController = (function() {
     const multiplayerBtn = document.querySelector(".game__button--2p");
     const menuBtn = document.querySelector(".button--menu");
     const startBtn = document.querySelector(".players__btn");
-
     const playerTwoLabel = document.querySelector(".players__label--p2");
-
-
-
     const playerOneNameDisplay = document.querySelector(".player-display__name--p1");
     const playerTwoNameDisplay = document.querySelector(".player-display__name--p2");
     const playerOneSymbolDisplay = document.querySelector(".player-display__symbol--p1");
     const playerTwoSymbolDisplay = document.querySelector(".player-display__symbol--p2");
-    const playerDisplayContOne = document.querySelector(".player-display__container--p1");
-    const playerDisplayContTwo = document.querySelector(".player-display__container--p2");
     const playerOneWinText = document.querySelector(".player-display__win--p1");
     const playerTwoWinText = document.querySelector(".player-display__win--p2");
     const playerWinText = document.querySelectorAll(".player-display__win");
     const playerFields = document.querySelector(".players__fields");
-
 
     let players;
 
@@ -186,7 +155,6 @@ const displayController = (function() {
         } else {
             playerName2 = playerInput2.value;
         }
-    
         return [playerName1, playerName2];
     };
     
@@ -271,9 +239,17 @@ const displayController = (function() {
         });
     }
   
-    return { currentPlayers, startBtn, showElement, hideElement, restartBtn, playerInput2, playerInput1,
-    playerOneNameDisplay, playerTwoNameDisplay, playerDisplayContOne, playerDisplayContTwo, playerOneSymbolDisplay, playerTwoSymbolDisplay, playerOneWinText, playerTwoWinText, clearWinner, displayTie };
-
+    return { 
+        currentPlayers, 
+        showElement, 
+        hideElement, 
+        playerInput2, 
+        playerInput1,
+        playerOneWinText, 
+        playerTwoWinText, 
+        clearWinner, 
+        displayTie 
+    };
 })();
 
 
