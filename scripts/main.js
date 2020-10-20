@@ -34,23 +34,6 @@ const gameBoard = (function() {
         }
     };
 
-    const checkWin = function() {
-        if ((board[0] === board[1] && board[0] === board[2] && board[0] != "") || 
-            (board[3] === board[4] && board[3] === board[5] && board[3] != "") || 
-            (board[6] === board[7] && board[6] === board[8] && board[6] != "") || 
-
-            (board[0] === board[3] && board[0] === board[6] && board[0] != "") || 
-            (board[1] === board[4] && board[1] === board[7] && board[7] != "") || 
-            (board[2] === board[5] && board[2] === board[8] && board[2] != "") ||
-        
-            (board[0] === board[4] && board[0] === board[8] && board[0] != "") || 
-            (board[2] === board[4] && board[2] === board[6] && board[2] != "")) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     const findWinner = () => {
         switch(true) {
             case (board[0] === board[1] && board[0] === board[2] && board[0] != ""):
@@ -94,7 +77,7 @@ const gameBoard = (function() {
     const checkTie = function() {
         if (board.includes("")) {
             return false;
-        } else if (!checkWin()){
+        } else if (!findWinner()){
             return true;
         }
     }
@@ -145,7 +128,6 @@ const gameBoard = (function() {
         boardSquares, 
         render, 
         clearBoard, 
-        checkWin, 
         checkTie, 
         checkOccupied, 
         findWinner,
@@ -184,6 +166,7 @@ const displayController = (function() {
     const playerDisplayContTwo = document.querySelector(".player-display__container--p2");
     const playerOneWinText = document.querySelector(".player-display__win--p1");
     const playerTwoWinText = document.querySelector(".player-display__win--p2");
+    const playerWinText = document.querySelectorAll(".player-display__win");
     const playerFields = document.querySelector(".players__fields");
 
 
@@ -281,9 +264,15 @@ const displayController = (function() {
         playerOneWinText.textContent = "";
         playerTwoWinText.textContent = "";
     }
+
+    const displayTie = function() {
+        playerWinText.forEach(display => {
+            display.textContent = "Tie!"
+        });
+    }
   
     return { currentPlayers, startBtn, showElement, hideElement, restartBtn, playerInput2, playerInput1,
-    playerOneNameDisplay, playerTwoNameDisplay, playerDisplayContOne, playerDisplayContTwo, playerOneSymbolDisplay, playerTwoSymbolDisplay, playerOneWinText, playerTwoWinText, clearWinner };
+    playerOneNameDisplay, playerTwoNameDisplay, playerDisplayContOne, playerDisplayContTwo, playerOneSymbolDisplay, playerTwoSymbolDisplay, playerOneWinText, playerTwoWinText, clearWinner, displayTie };
 
 })();
 
@@ -453,7 +442,7 @@ const game = (function() {
     // TODO: Figure out why this returns an ID of undefined when there is a tie
 
     const compTurn = function() {
-        if (gameBoard.checkWin()) {
+        if (gameBoard.findWinner()) {
             // pass
         } else {
             console.log(minimax(currentPlayer()).id);
@@ -517,12 +506,12 @@ const game = (function() {
     };
 
     const gameOutcome = function() {
-        if (gameBoard.checkWin()) {
+        if (gameBoard.findWinner()) {
             gameWinMultiplayer();    
       
         } else if (gameBoard.checkTie()) {
             gameTie();
-
+            displayController.displayTie();
         } else {
             // pass
         }
@@ -530,11 +519,12 @@ const game = (function() {
     }
     
     const gameOutcomeSinglePlayer = function() {
-        if (gameBoard.checkWin()) {
+        if (gameBoard.findWinner()) {
             gameWinSinglePlayer();  
             changeTurn();   
         } else if (gameBoard.checkTie()) {
-            gameTie();    
+            gameTie();   
+            displayController.displayTie(); 
         } else {
             // pass
         }
