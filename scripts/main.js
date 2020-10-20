@@ -445,7 +445,6 @@ const game = (function() {
         if (gameBoard.findWinner()) {
             // pass
         } else {
-            console.log(minimax(currentPlayer()).id);
             if (minimax(currentPlayer()).id != undefined) {
                 gameBoard.board[minimax(currentPlayer()).id] = currentPlayer().marker
             } else {
@@ -477,7 +476,7 @@ const game = (function() {
 
     const gameWinMultiplayer = function() {
         gameBoard.colourWinningSquares(gameBoard.findWinner());
-        console.log(gameBoard.boardWinValue(gameBoard.findWinner()));
+ 
         if (findWinningPlayer().name === "Computer") {
             changeTurn();
         } 
@@ -492,7 +491,6 @@ const game = (function() {
 
     const gameWinSinglePlayer = function() {
         gameBoard.colourWinningSquares(gameBoard.findWinner());
-        console.log(gameBoard.boardWinValue(gameBoard.findWinner()));
         if (findWinningPlayer().name === "Computer") {
             changeTurn();
             displayController.playerTwoWinText.textContent = "Winner!";
