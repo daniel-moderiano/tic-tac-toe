@@ -325,10 +325,6 @@ const game = (function() {
             square.removeEventListener('click', twoPlayerEvents);
         });
     };
-    // Consider abstraction to playTurn function below; not a great deal of functions and adds perhaps needless step.
-
-    // TODO: Address the fact that this function is re-added when you return to menu and start a new game!!!
-    // Remove event listener isn't working because the attached function is currently anonymous!!
 
     const onePlayerEvents = function(e) {
         playTurnOnePlayer(e);
@@ -377,7 +373,6 @@ const game = (function() {
     };
 
     const minimax = function(player) {
- 
         // Base case for recursion should return +10 for AI win and -10 for human win, and 0 for a tie.
         if (gameBoard.findWinner() != false) {
             if (gameBoard.winningPlayer().name != "Computer") {
@@ -432,14 +427,9 @@ const game = (function() {
                 }
             }
         }
-    
-    
-    
         return bestMove;
-    
-    
     }
-    // TODO: Figure out why this returns an ID of undefined when there is a tie
+
 
     const compTurn = function() {
         if (gameBoard.findWinner()) {
@@ -471,8 +461,6 @@ const game = (function() {
         }
         
     };
-
-    // TODO: With a change in turn at end of game, the winner text switches to P1 when comp wins
 
     const gameWinMultiplayer = function() {
         gameBoard.colourWinningSquares(gameBoard.findWinner());
