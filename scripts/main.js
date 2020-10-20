@@ -1,4 +1,5 @@
 const gameBoard = (function() {
+    
     const board = ["", "", "",
                    "", "", "",            
                    "", "", ""];
@@ -252,8 +253,6 @@ const displayController = (function() {
     };
 })();
 
-
-
 const Player = function(name, marker) {
 
     const placeMarker = (event) => {
@@ -262,7 +261,6 @@ const Player = function(name, marker) {
     };
 
     return { placeMarker, name, marker };
-
 };
 
 const game = (function() {
@@ -305,13 +303,12 @@ const game = (function() {
     const onePlayerEvents = function(e) {
         playTurnOnePlayer(e);
         gameOutcomeSinglePlayer();
-    }
+    };
 
     const twoPlayerEvents = function(e) {
         playTurnTwoPlayer(e);
         gameOutcome();
-    }
-
+    };
 
     const twoPlayer = function() {
         gameBoard.boardSquares.forEach(function(square) {
@@ -319,12 +316,11 @@ const game = (function() {
         });
     };
 
-    
     const onePlayer = function() {
         gameBoard.boardSquares.forEach(function(square) {
             square.addEventListener('click', onePlayerEvents);
         });
-    }
+    };
 
     const gameMode = function() {
         if (displayController.currentPlayers()[1].name === "Computer") {
@@ -332,11 +328,9 @@ const game = (function() {
         } else {
             twoPlayer();
         }
-    }
+    };
     
-  
     const playTurnTwoPlayer = function(e) {
-
         gameBoard.clearColours();
         displayController.clearWinner();        
         if (gameBoard.checkOccupied(e) === false) {
@@ -404,8 +398,7 @@ const game = (function() {
             }
         }
         return bestMove;
-    }
-
+    };
 
     const compTurn = function() {
         if (gameBoard.findWinner()) {
@@ -418,13 +411,10 @@ const game = (function() {
             }
             gameBoard.render();   
             changeTurn(); 
-        }
-        
-    }
+        }    
+    };
     
     const playTurnOnePlayer = function(e) {
-
-
         gameBoard.clearColours();     
         displayController.clearWinner();   
         if (gameBoard.checkOccupied(e) === false) {
@@ -435,12 +425,10 @@ const game = (function() {
         } else {
             // pass
         }
-        
     };
 
     const gameWinMultiplayer = function() {
         gameBoard.colourWinningSquares(gameBoard.findWinner());
- 
         if (findWinningPlayer().name === "Computer") {
             changeTurn();
         } 
@@ -450,7 +438,6 @@ const game = (function() {
             displayController.playerTwoWinText.textContent = "Winner!";
         }
         gameBoard.clearBoard();
-       
     };
 
     const gameWinSinglePlayer = function() {
@@ -459,26 +446,21 @@ const game = (function() {
             changeTurn();
             displayController.playerTwoWinText.textContent = "Winner!";
         } 
-        gameBoard.clearBoard();
-       
+        gameBoard.clearBoard(); 
     };
 
     const gameTie = function() {
+        displayController.displayTie();
         gameBoard.clearBoard();
     };
 
     const gameOutcome = function() {
         if (gameBoard.findWinner()) {
             gameWinMultiplayer();    
-      
         } else if (gameBoard.checkTie()) {
             gameTie();
-            displayController.displayTie();
-        } else {
-            // pass
-        }
-        
-    }
+        } 
+    };
     
     const gameOutcomeSinglePlayer = function() {
         if (gameBoard.findWinner()) {
@@ -486,37 +468,11 @@ const game = (function() {
             changeTurn();   
         } else if (gameBoard.checkTie()) {
             gameTie();   
-            displayController.displayTie(); 
-        } else {
-            // pass
-        }
-        
-    }
-
-
-    
-
-
-    
-
-    return { 
-        changeTurn, 
-        currentTurn, 
-        turn, 
-        currentPlayer, 
-        resetTurn, 
-        playTurnTwoPlayer,
-        playTurnOnePlayer,
-        gameTie,
-        findWinningPlayer,
-        gameMode, 
-        minimax,
-        removeGameModeEvent,
-        gameOutcome,
-        playTurnTwoPlayer, 
-        onePlayerEvents,
-        twoPlayerEvents
+        } 
     };
+
+    return { currentPlayer, resetTurn, gameMode, removeGameModeEvent };
+
 })();
 
 
